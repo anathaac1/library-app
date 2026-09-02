@@ -1,0 +1,1117 @@
+/* =================================
+   DATA BUKU
+================================= */
+
+.data-buku-page {
+  width: 100%;
+}
+
+
+/* =================================
+   HEADER
+================================= */
+
+.data-buku-page .page-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+
+.data-buku-page .page-header > div:first-child {
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* =================================
+   SEARCH + FILTER + TOMBOL TAMBAH
+================================= */
+
+.page-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 20px;
+
+  width: 100%;
+}
+
+
+/* =================================
+   SEARCH BAR
+================================= */
+
+.search-box {
+  width: 220px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+
+  background: white;
+
+  border: 1px solid #e2d8cc;
+  border-radius: 8px;
+
+  padding: 0 12px;
+
+  box-sizing: border-box;
+
+  transition: 0.2s ease;
+
+  flex-shrink: 0;
+}
+
+
+.search-box:focus-within {
+  border-color: #3b2119;
+
+  box-shadow:
+    0 0 0 2px rgba(59, 33, 25, 0.08);
+}
+
+
+.search-icon {
+  color: #8d7b72;
+
+  margin-right: 8px;
+
+  line-height: 1;
+
+  flex-shrink: 0;
+}
+
+
+.search-box input {
+  width: 100%;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  font-size: 11px;
+
+  color: #30221d;
+}
+
+
+.search-box input::placeholder {
+  color: #a6968d;
+}
+
+
+/* =================================
+   FILTER GENRE
+================================= */
+
+.genre-filter {
+  position: relative;
+
+  width: 150px;
+  height: 40px;
+
+  flex-shrink: 0;
+}
+
+
+.genre-filter select {
+  width: 100%;
+  height: 100%;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  border: 1px solid #e2d8cc;
+
+  border-radius: 8px;
+
+  background: white;
+
+  color: #30221d;
+
+  padding: 0 34px 0 12px;
+
+  outline: none;
+
+  font-family: inherit;
+
+  font-size: 11px;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+
+  box-sizing: border-box;
+}
+
+
+.genre-filter select:focus {
+  border-color: #3b2119;
+
+  box-shadow:
+    0 0 0 2px rgba(59, 33, 25, 0.08);
+}
+
+
+.genre-filter-icon {
+  position: absolute;
+
+  right: 11px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: #8d7b72;
+
+  pointer-events: none;
+}
+
+
+/* =================================
+   TOMBOL TAMBAH
+================================= */
+
+.btn-tambah {
+  border: none;
+
+  border-radius: 8px;
+
+  padding: 0 18px;
+
+  height: 40px;
+
+  background: #3b2119;
+
+  color: white;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+
+  flex-shrink: 0;
+}
+
+
+.btn-tambah:hover {
+  background: #542f24;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 4px 10px rgba(59, 33, 25, 0.15);
+}
+
+
+/* =================================
+   GRID BUKU
+================================= */
+
+.book-grid {
+  display: grid;
+
+  /*
+    CARD TETAP 215px.
+    Jumlah kolom mengikuti ruang yang tersedia.
+    Kalau hasil search cuma 1,
+    card TIDAK akan melebar.
+  */
+
+  grid-template-columns:
+    repeat(auto-fill, 215px);
+
+  gap: 18px;
+
+  width: 100%;
+
+  max-height: calc(100vh - 380px);
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding-right: 10px;
+
+  box-sizing: border-box;
+
+  align-content: start;
+
+  justify-content: start;
+}
+
+
+/* =================================
+   SCROLLBAR GRID BUKU
+================================= */
+
+.book-grid::-webkit-scrollbar {
+  width: 7px;
+}
+
+
+.book-grid::-webkit-scrollbar-track {
+  background: #f1eae2;
+
+  border-radius: 10px;
+}
+
+
+.book-grid::-webkit-scrollbar-thumb {
+  background: #b8a69c;
+
+  border-radius: 10px;
+}
+
+
+.book-grid::-webkit-scrollbar-thumb:hover {
+  background: #8d7569;
+}
+
+
+/* =================================
+   CARD BUKU
+================================= */
+
+.book-card {
+  width: 215px;
+
+  background: white;
+
+  border: 1px solid #e7dfd4;
+
+  border-radius: 12px;
+
+  overflow: hidden;
+
+  transition: 0.2s ease;
+
+  box-shadow:
+    0 2px 8px rgba(59, 33, 25, 0.04);
+
+  box-sizing: border-box;
+}
+
+
+.book-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 8px 20px rgba(59, 33, 25, 0.10);
+}
+
+
+/* =================================
+   AREA COVER
+================================= */
+
+.book-cover-wrapper {
+  width: 100%;
+
+  height: 188px;
+
+  background: #542f24;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 14px;
+
+  box-sizing: border-box;
+}
+
+
+/* =================================
+   FOTO COVER
+================================= */
+
+.book-cover {
+  width: 108px;
+
+  height: 155px;
+
+  object-fit: cover;
+
+  display: block;
+
+  border-radius: 6px;
+
+  box-shadow:
+    0 4px 10px rgba(59, 33, 25, 0.15);
+}
+
+
+/* =================================
+   INFO BUKU
+================================= */
+
+.book-info {
+  padding: 14px;
+}
+
+
+/* =================================
+   JUDUL
+================================= */
+
+.book-info h3 {
+  font-size: 13px;
+
+  color: #30221d;
+
+  margin: 0 0 5px;
+
+  line-height: 1.3;
+}
+
+
+/* =================================
+   PENULIS
+================================= */
+
+.book-author {
+  font-size: 10px;
+
+  color: #8d7b72;
+
+  margin: 0 0 11px;
+
+  line-height: 1.4;
+}
+
+
+/* =================================
+   GENRE + STOCK
+================================= */
+
+.book-meta {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 6px;
+
+  margin-bottom: 12px;
+}
+
+
+.book-meta span {
+  font-size: 9px;
+
+  color: #6f5d54;
+
+  background: #f1eadc;
+
+  padding: 4px 7px;
+
+  border-radius: 5px;
+
+  white-space: nowrap;
+}
+
+
+/* =================================
+   TOMBOL LIHAT DETAIL
+================================= */
+
+.btn-lihat {
+  width: 100%;
+
+  height: 32px;
+
+  border: 1px solid #3b2119;
+
+  border-radius: 7px;
+
+  background: white;
+
+  color: #3b2119;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+
+.btn-lihat:hover {
+  background: #3b2119;
+
+  color: white;
+
+  box-shadow:
+    0 4px 10px rgba(59, 33, 25, 0.15);
+}
+
+
+/* =================================
+   BUKU TIDAK DITEMUKAN
+================================= */
+
+.empty-book {
+  font-size: 12px;
+
+  color: #8d7b72;
+}
+
+
+/* =================================
+   RESPONSIVE
+================================= */
+
+@media (max-width: 1100px) {
+
+  .book-grid {
+    grid-template-columns:
+      repeat(auto-fill, 215px);
+  }
+
+}
+
+
+@media (max-width: 800px) {
+
+  .book-grid {
+    grid-template-columns:
+      repeat(auto-fill, 215px);
+  }
+
+}
+
+
+@media (max-width: 700px) {
+
+  .page-actions {
+    flex-wrap: wrap;
+  }
+
+}
+
+
+@media (max-width: 550px) {
+
+  .data-buku-page .page-header {
+    flex-direction: column;
+
+    gap: 15px;
+  }
+
+
+  .page-actions {
+    width: 100%;
+
+    margin-top: 15px;
+
+    flex-wrap: wrap;
+  }
+
+
+  .search-box {
+    flex: 1;
+
+    min-width: 150px;
+  }
+
+
+  .genre-filter {
+    flex: 1;
+
+    min-width: 150px;
+  }
+
+
+  .btn-tambah {
+    width: 100%;
+
+    margin-top: 0;
+  }
+
+
+  .book-grid {
+    grid-template-columns: 1fr;
+
+    max-height: calc(100vh - 330px);
+
+    padding-right: 5px;
+  }
+
+
+  .book-card {
+    width: 100%;
+  }
+
+}
+
+
+/* =================================
+   MODAL OVERLAY
+================================= */
+
+.modal-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(47, 33, 28, 0.45);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 20px;
+
+  z-index: 9999;
+
+  animation: modalFade 0.2s ease;
+}
+
+
+@keyframes modalFade {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+
+}
+
+
+/* =================================
+   MODAL BOX
+================================= */
+
+.modal-box {
+  width: 100%;
+
+  max-width: 520px;
+
+  max-height: 90vh;
+
+  overflow-y: auto;
+
+  background: white;
+
+  border-radius: 14px;
+
+  border: 1px solid #e7dfd4;
+
+  box-shadow:
+    0 15px 40px rgba(59, 33, 25, 0.18);
+
+  animation: modalSlide 0.2s ease;
+}
+
+
+/* =================================
+   SCROLLBAR MODAL
+================================= */
+
+.modal-box::-webkit-scrollbar {
+  width: 6px;
+}
+
+
+.modal-box::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+.modal-box::-webkit-scrollbar-thumb {
+  background: #c9bbb1;
+
+  border-radius: 10px;
+}
+
+
+.modal-box::-webkit-scrollbar-thumb:hover {
+  background: #a89589;
+}
+
+
+@keyframes modalSlide {
+
+  from {
+    opacity: 0;
+
+    transform: translateY(10px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0) scale(1);
+  }
+
+}
+
+
+/* =================================
+   MODAL HEADER
+================================= */
+
+.modal-header {
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 20px;
+
+  border-bottom: 1px solid #eee7df;
+}
+
+
+.modal-header h2 {
+  margin: 0;
+
+  font-size: 18px;
+
+  color: #2f211c;
+}
+
+
+.modal-header p {
+  margin: 5px 0 0;
+
+  font-size: 10px;
+
+  color: #907a70;
+}
+
+
+/* =================================
+   CLOSE
+================================= */
+
+.modal-close {
+  width: 32px;
+
+  height: 32px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border: none;
+
+  border-radius: 7px;
+
+  background: #faf7f2;
+
+  color: #5f4c44;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+
+  flex-shrink: 0;
+}
+
+
+.modal-close:hover {
+  background: #f1e8df;
+
+  color: #3b2119;
+}
+
+
+/* =================================
+   DETAIL CONTENT
+================================= */
+
+.detail-content {
+  display: flex;
+
+  gap: 22px;
+
+  padding: 22px;
+}
+
+
+.detail-cover {
+  width: 130px;
+
+  height: 185px;
+
+  background: #faf7f2;
+
+  border-radius: 8px;
+
+  overflow: hidden;
+
+  flex-shrink: 0;
+}
+
+
+.detail-cover img {
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+}
+
+
+.detail-info {
+  flex: 1;
+
+  min-width: 0;
+}
+
+
+.detail-info h3 {
+  margin: 0 0 18px;
+
+  font-size: 17px;
+
+  color: #30221d;
+}
+
+
+.detail-row {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+
+  padding: 10px 0;
+
+  border-bottom: 1px solid #f0ebe5;
+}
+
+
+.detail-row span {
+  font-size: 9px;
+
+  color: #9b8378;
+}
+
+
+.detail-row strong {
+  font-size: 11px;
+
+  color: #55443d;
+}
+
+
+/* =================================
+   FORM
+================================= */
+
+.book-form {
+  padding: 20px;
+}
+
+
+.form-group {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 7px;
+
+  margin-bottom: 15px;
+}
+
+
+.form-group label {
+  font-size: 10px;
+
+  font-weight: 600;
+
+  color: #55443d;
+}
+
+
+.form-group input {
+  width: 100%;
+
+  height: 40px;
+
+  padding: 0 11px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #dfd5ca;
+
+  border-radius: 7px;
+
+  outline: none;
+
+  background: white;
+
+  color: #30221d;
+
+  font-family: inherit;
+
+  font-size: 11px;
+
+  transition: 0.2s ease;
+}
+
+
+.form-group input:focus {
+  border-color: #3b2119;
+
+  box-shadow:
+    0 0 0 3px rgba(59, 33, 25, 0.06);
+}
+
+
+.form-group input::placeholder {
+  color: #b19e94;
+}
+
+
+.form-group small {
+  font-size: 9px;
+
+  color: #9b8378;
+}
+
+
+/* =================================
+   FORM ROW
+================================= */
+
+.form-row {
+  display: grid;
+
+  grid-template-columns: 1fr 120px;
+
+  gap: 12px;
+}
+
+
+/* =================================
+   MODAL FOOTER
+================================= */
+
+.modal-footer {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  margin-top: 20px;
+
+  padding: 15px 20px;
+
+  border-top: 1px solid #eee7df;
+}
+
+
+/* =================================
+   SEMUA TOMBOL MODAL
+================================= */
+
+.modal-footer button {
+  height: 36px;
+
+  padding: 0 16px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 7px;
+
+  transition: all 0.2s ease;
+}
+
+
+/* =================================
+   TOMBOL TUTUP
+================================= */
+
+.btn-modal-secondary {
+  background: white;
+
+  color: #5f4a42;
+
+  border: 1px solid #d9cbc3;
+}
+
+
+.btn-modal-secondary:hover {
+  background: #f7f1eb;
+}
+
+
+/* =================================
+   TOMBOL PRIMARY
+================================= */
+
+.btn-modal-primary {
+  height: 36px;
+
+  padding: 0 15px;
+
+  border: none;
+
+  border-radius: 7px;
+
+  background: #3b2119;
+
+  color: white;
+
+  font-family: inherit;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+
+.btn-modal-primary:hover {
+  background: #542f24;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 3px 8px rgba(59, 33, 25, 0.15);
+}
+
+
+/* =================================
+   TOMBOL EDIT
+================================= */
+
+.btn-modal-edit {
+  background: #3b2119;
+
+  color: white;
+
+  border: 1px solid #3b2119;
+}
+
+
+.btn-modal-edit:hover {
+  background: #542f24;
+
+  border-color: #542f24;
+
+  transform: translateY(-1px);
+}
+
+
+/* =================================
+   TOMBOL HAPUS
+================================= */
+
+.btn-modal-danger {
+  background: #fff5f4;
+
+  color: #b42318;
+
+  border: 1px solid #e7b7b2;
+}
+
+
+.btn-modal-danger:hover {
+  background: #fce8e6;
+
+  border-color: #d99a94;
+
+  transform: translateY(-1px);
+}
+
+
+/* =================================
+   ICON
+================================= */
+
+.btn-modal-edit svg,
+.btn-modal-danger svg {
+  width: 15px;
+
+  height: 15px;
+}
+
+
+/* =================================
+   RESPONSIVE MODAL
+================================= */
+
+@media (max-width: 600px) {
+
+  .modal-overlay {
+    padding: 12px;
+  }
+
+
+  .detail-content {
+    flex-direction: column;
+
+    align-items: center;
+  }
+
+
+  .detail-info {
+    width: 100%;
+  }
+
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+
+  .modal-footer {
+    flex-direction: column-reverse;
+
+    align-items: stretch;
+  }
+
+
+  .btn-modal-primary,
+  .btn-modal-secondary {
+    width: 100%;
+  }
+
+}

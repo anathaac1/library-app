@@ -1,0 +1,1177 @@
+/* =================================
+   DATA GENRE
+================================= */
+
+.data-genre-page {
+  width: 100%;
+  min-width: 0;
+}
+
+
+/* =================================
+   HEADER
+================================= */
+
+.genre-header {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 10px;
+  margin-bottom: 26px;
+}
+
+
+/* =================================
+   BREADCRUMB
+================================= */
+
+.genre-header .breadcrumb {
+  font-size: 11px;
+  color: #9b8378;
+}
+
+
+/* =================================
+   JUDUL
+================================= */
+
+.genre-header h1 {
+  font-size: 27px;
+  margin: 5px 0 0;
+  color: #2f211c;
+}
+
+.genre-header p {
+  font-size: 12px;
+  color: #907a70;
+  margin: 5px 0 0;
+}
+
+
+/* =================================
+   SEARCH + TOMBOL
+================================= */
+
+.genre-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+
+/* =================================
+   SEARCH
+================================= */
+
+.genre-search {
+  width: 225px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+  padding: 0 12px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  border: 1px solid #ddd3c8;
+  border-radius: 8px;
+
+  color: #9b8378;
+
+  transition: 0.2s ease;
+}
+
+.genre-search:focus-within {
+  border-color: #3b2119;
+
+  box-shadow:
+    0 0 0 2px rgba(59, 33, 25, 0.08);
+}
+
+.genre-search svg {
+  flex-shrink: 0;
+}
+
+.genre-search input {
+  width: 100%;
+  min-width: 0;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  font-family: inherit;
+  font-size: 11px;
+
+  color: #3b2119;
+}
+
+.genre-search input::placeholder {
+  color: #9b8378;
+}
+
+
+/* =================================
+   TOMBOL TAMBAH
+================================= */
+
+.btn-tambah-genre {
+  height: 40px;
+
+  border: none;
+  border-radius: 8px;
+
+  padding: 0 17px;
+
+  background: #3b2119;
+  color: #ffffff;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.btn-tambah-genre:hover {
+  background: #542f24;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 4px 10px rgba(59, 33, 25, 0.15);
+}
+
+
+/* =================================
+   GRID GENRE
+================================= */
+
+.genre-grid {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(6, minmax(0, 1fr));
+
+  gap: 14px;
+
+  align-content: start;
+
+  max-height: calc(100vh - 360px);
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding-right: 10px;
+  padding-bottom: 10px;
+
+  box-sizing: border-box;
+}
+
+
+/* =================================
+   SCROLLBAR
+================================= */
+
+.genre-grid::-webkit-scrollbar {
+  width: 7px;
+}
+
+.genre-grid::-webkit-scrollbar-track {
+  background: #f1eae2;
+  border-radius: 10px;
+}
+
+.genre-grid::-webkit-scrollbar-thumb {
+  background: #b8a69c;
+  border-radius: 10px;
+}
+
+.genre-grid::-webkit-scrollbar-thumb:hover {
+  background: #8d7569;
+}
+
+
+/* =================================
+   CARD GENRE
+   PUTIH SEMUA
+================================= */
+
+.genre-card {
+  width: 100%;
+  min-width: 0;
+
+  min-height: 205px;
+
+  background: #ffffff;
+
+  border: 1px solid #e7dfd4;
+  border-radius: 11px;
+
+  overflow: hidden;
+
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+
+  box-shadow:
+    0 3px 10px rgba(59, 33, 25, 0.06);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.genre-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 8px 18px rgba(59, 33, 25, 0.11);
+}
+
+
+/* =================================
+   BAGIAN ATAS CARD
+   PUTIH
+================================= */
+
+.genre-card-top {
+  width: 100%;
+  height: 91px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+
+  background: #ffffff;
+}
+
+
+/* =================================
+   ICON GENRE
+   CREAM TIPIS
+================================= */
+
+.genre-icon {
+  width: 57px;
+  height: 57px;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #f8f0e8;
+
+  color: #704027;
+
+  border: 1px solid #eadbcd;
+
+  box-shadow:
+    0 2px 6px rgba(59, 33, 25, 0.05);
+}
+
+
+/* =================================
+   CONTENT
+================================= */
+
+.genre-content {
+  width: 100%;
+
+  min-height: 76px;
+
+  padding: 11px 14px 8px;
+
+  box-sizing: border-box;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  background: #ffffff;
+}
+
+.genre-content h3 {
+  font-size: 15px;
+
+  color: #30221d;
+
+  margin: 0 0 5px;
+
+  line-height: 1.3;
+
+  font-weight: 700;
+
+  word-break: break-word;
+}
+
+.genre-content p {
+  font-size: 11px;
+
+  color: #8d7b72;
+
+  margin: 0;
+}
+
+
+/* =================================
+   ACTION
+================================= */
+
+.genre-actions {
+  width: calc(100% - 28px);
+
+  margin: auto auto 0;
+
+  padding-top: 9px;
+  padding-bottom: 10px;
+
+  border-top: 1px solid #eee5dc;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+}
+
+
+/* =================================
+   SEMUA TOMBOL ACTION
+================================= */
+
+.btn-lihat-genre,
+.btn-edit-genre,
+.btn-delete-genre {
+  width: 34px;
+  height: 32px;
+
+  min-width: 34px;
+
+  padding: 0;
+
+  border-radius: 7px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  font-family: inherit;
+
+  transition: 0.2s ease;
+
+  box-sizing: border-box;
+}
+
+
+/* =================================
+   HILANGKAN TEKS TOMBOL
+================================= */
+
+.btn-lihat-genre span,
+.btn-edit-genre span,
+.btn-delete-genre span {
+  display: none;
+}
+
+
+/* =================================
+   LIHAT BUKU
+================================= */
+
+.btn-lihat-genre {
+  background: #3b2119;
+
+  color: #ffffff;
+
+  border: 1px solid #3b2119;
+}
+
+.btn-lihat-genre:hover {
+  background: #542f24;
+
+  border-color: #542f24;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 4px 10px rgba(59, 33, 25, 0.15);
+}
+
+
+/* =================================
+   EDIT
+================================= */
+
+.btn-edit-genre {
+  background: #f7f1e9;
+
+  color: #4b3026;
+
+  border: 1px solid #e2d7ca;
+}
+
+.btn-edit-genre:hover {
+  background: #4b3026;
+
+  color: #ffffff;
+
+  border-color: #4b3026;
+}
+
+
+/* =================================
+   DELETE
+================================= */
+
+.btn-delete-genre {
+  background: #fff5f3;
+
+  color: #c04f43;
+
+  border: 1px solid #f0d2ce;
+}
+
+.btn-delete-genre:hover {
+  background: #c04f43;
+
+  color: #ffffff;
+
+  border-color: #c04f43;
+}
+
+
+/* =================================
+   EMPTY
+================================= */
+
+.genre-empty {
+  grid-column: 1 / -1;
+
+  font-size: 12px;
+
+  color: #8d7b72;
+
+  margin: 10px 0;
+}
+
+
+/* =================================
+   MODAL OVERLAY
+================================= */
+
+.modal-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(47, 33, 28, 0.45);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  z-index: 9999;
+
+  animation: modalFade 0.2s ease;
+}
+
+@keyframes modalFade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* =================================
+   MODAL BOX
+================================= */
+
+.modal-box {
+  width: 100%;
+
+  max-width: 420px;
+  max-height: 90vh;
+
+  overflow-y: auto;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  border-radius: 14px;
+
+  border: 1px solid #e7dfd4;
+
+  padding: 24px;
+
+  box-shadow:
+    0 20px 50px rgba(59, 33, 25, 0.18);
+
+  animation: modalSlide 0.2s ease;
+}
+
+
+/* =================================
+   MODAL SCROLLBAR
+================================= */
+
+.modal-box::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-box::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal-box::-webkit-scrollbar-thumb {
+  background: #c9bbb1;
+
+  border-radius: 10px;
+}
+
+.modal-box::-webkit-scrollbar-thumb:hover {
+  background: #a89589;
+}
+
+
+@keyframes modalSlide {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(10px)
+      scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+
+/* =================================
+   MODAL HEADER
+================================= */
+
+.modal-header {
+  display: flex;
+
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 24px;
+}
+
+.modal-header h2 {
+  margin: 0 0 6px;
+
+  font-size: 20px;
+
+  color: #3f241b;
+}
+
+.modal-header p {
+  margin: 0;
+
+  font-size: 13px;
+
+  color: #8b6f64;
+}
+
+
+/* =================================
+   MODAL CLOSE
+================================= */
+
+.modal-close {
+  width: 32px;
+  height: 32px;
+
+  padding: 0;
+
+  border: none;
+
+  background: #f5f0e8;
+
+  color: #5a3024;
+
+  border-radius: 8px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  flex-shrink: 0;
+}
+
+.modal-close:hover {
+  background: #eadfd2;
+}
+
+
+/* =================================
+   FORM
+================================= */
+
+.genre-form {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.genre-form label {
+  font-size: 13px;
+
+  font-weight: 600;
+
+  color: #3f241b;
+}
+
+.genre-form input {
+  width: 100%;
+  height: 42px;
+
+  box-sizing: border-box;
+
+  padding: 0 14px;
+
+  border: 1px solid #ddd1c5;
+
+  border-radius: 8px;
+
+  outline: none;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  color: #3f241b;
+
+  background: #ffffff;
+}
+
+.genre-form input:focus {
+  border-color: #5a3024;
+
+  box-shadow:
+    0 0 0 2px rgba(90, 48, 36, 0.1);
+}
+
+
+/* =================================
+   MODAL ACTIONS
+================================= */
+
+.modal-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  margin-top: 16px;
+}
+
+
+/* =================================
+   BUTTON MODAL
+================================= */
+
+.btn-batal,
+.btn-simpan {
+  border: none;
+
+  padding: 10px 16px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+
+/* =================================
+   BATAL
+================================= */
+
+.btn-batal {
+  background: #f2ede7;
+
+  color: #5a3024;
+}
+
+.btn-batal:hover {
+  background: #e7ddd3;
+}
+
+
+/* =================================
+   SIMPAN
+================================= */
+
+.btn-simpan {
+  background: #4a281f;
+
+  color: #ffffff;
+}
+
+.btn-simpan:hover {
+  background: #351b15;
+}
+
+
+/* =================================
+   MODAL DAFTAR BUKU GENRE
+================================= */
+
+.genre-books-modal {
+  max-width: 520px;
+}
+
+
+/* =================================
+   LIST BUKU
+================================= */
+
+.genre-book-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+
+  padding: 20px;
+
+  max-height: 430px;
+
+  overflow-y: auto;
+
+  box-sizing: border-box;
+}
+
+.genre-book-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.genre-book-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.genre-book-list::-webkit-scrollbar-thumb {
+  background: #c9bbb1;
+
+  border-radius: 10px;
+}
+
+
+/* =================================
+   ITEM BUKU
+================================= */
+
+.genre-book-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+  padding: 10px;
+
+  background: #ffffff;
+
+  border: 1px solid #eee5dc;
+
+  border-radius: 9px;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.genre-book-item:hover {
+  background: #faf7f2;
+
+  border-color: #d9cbc0;
+
+  transform: translateY(-1px);
+}
+
+
+/* =================================
+   COVER BUKU
+================================= */
+
+.genre-book-cover {
+  width: 52px;
+
+  height: 70px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  overflow: hidden;
+
+  border-radius: 5px;
+
+  background: #eadfd5;
+
+  color: #6a4b3f;
+}
+
+.genre-book-cover img {
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+}
+
+
+/* =================================
+   INFO BUKU
+================================= */
+
+.genre-book-info {
+  min-width: 0;
+
+  flex: 1;
+
+  display: flex;
+
+  flex-direction: column;
+}
+
+.genre-book-info h3 {
+  margin: 0 0 4px;
+
+  font-size: 12px;
+
+  color: #30221d;
+
+  line-height: 1.35;
+}
+
+.genre-book-info p {
+  margin: 0 0 7px;
+
+  font-size: 10px;
+
+  color: #8d7b72;
+}
+
+.genre-book-info span {
+  width: fit-content;
+
+  padding: 3px 7px;
+
+  border-radius: 5px;
+
+  background: #f1eadc;
+
+  color: #6f5d54;
+
+  font-size: 9px;
+}
+
+
+/* =================================
+   TIDAK ADA BUKU
+================================= */
+
+.genre-no-book {
+  min-height: 180px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  color: #9b8378;
+
+  text-align: center;
+}
+
+.genre-no-book p {
+  margin: 0;
+
+  font-size: 12px;
+}
+
+
+/* =================================
+   DETAIL BUKU DARI GENRE
+================================= */
+
+.genre-book-detail-modal {
+  max-width: 520px;
+}
+
+
+/* =================================
+   CONTENT DETAIL
+================================= */
+
+.genre-detail-content {
+  display: flex;
+
+  gap: 22px;
+
+  padding: 22px;
+}
+
+
+/* =================================
+   COVER DETAIL
+================================= */
+
+.genre-detail-cover {
+  width: 130px;
+
+  height: 185px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  overflow: hidden;
+
+  border-radius: 8px;
+
+  background: #faf7f2;
+
+  color: #8d7569;
+}
+
+.genre-detail-cover img {
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+}
+
+
+/* =================================
+   INFO DETAIL
+================================= */
+
+.genre-detail-info {
+  flex: 1;
+
+  min-width: 0;
+}
+
+.genre-detail-info h3 {
+  margin: 0 0 18px;
+
+  font-size: 17px;
+
+  color: #30221d;
+
+  line-height: 1.35;
+}
+
+
+/* =================================
+   ROW DETAIL
+================================= */
+
+.genre-detail-row {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+
+  padding: 10px 0;
+
+  border-bottom: 1px solid #f0ebe5;
+}
+
+.genre-detail-row span {
+  font-size: 9px;
+
+  color: #9b8378;
+}
+
+.genre-detail-row strong {
+  font-size: 11px;
+
+  color: #55443d;
+
+  word-break: break-word;
+}
+
+
+/* =================================
+   RESPONSIVE
+================================= */
+
+@media (max-width: 1200px) {
+
+  .genre-grid {
+    grid-template-columns:
+      repeat(4, minmax(0, 1fr));
+  }
+
+}
+
+
+@media (max-width: 900px) {
+
+  .genre-grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .genre-toolbar {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .genre-search {
+    width: 100%;
+  }
+
+  .btn-tambah-genre {
+    width: auto;
+  }
+
+  .genre-grid {
+    grid-template-columns: 1fr;
+
+    max-height: calc(100vh - 350px);
+
+    padding-right: 5px;
+  }
+
+  .genre-card {
+    width: 100%;
+  }
+
+  .genre-actions {
+    flex-wrap: wrap;
+  }
+
+  .btn-lihat-genre,
+  .btn-edit-genre,
+  .btn-delete-genre {
+    flex: 1;
+
+    min-width: 34px;
+  }
+
+  .genre-detail-content {
+    flex-direction: column;
+
+    align-items: center;
+  }
+
+  .genre-detail-info {
+    width: 100%;
+  }
+
+  .genre-book-detail-modal {
+    max-width: 100%;
+  }
+
+  .modal-overlay {
+    padding: 12px;
+  }
+
+  .modal-box {
+    max-width: 100%;
+  }
+
+  .modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .btn-batal,
+  .btn-simpan {
+    width: 100%;
+  }
+
+}
