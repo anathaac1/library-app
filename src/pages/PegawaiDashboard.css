@@ -1,297 +1,131 @@
-* {
-  box-sizing: border-box;
-}
+/* =====================================================
+   DASHBOARD PEGAWAI
+===================================================== */
 
-.pegawai-dashboard {
-  min-height: 100vh;
-  display: flex;
+.pegawai-dashboard-page {
+  width: 100%;
+  min-height: calc(100vh - 90px);
+  padding: 28px;
   background: #f1eadc;
   color: #2f211c;
 }
 
 
-/* =================================
-   SIDEBAR
-================================= */
-
-.pegawai-sidebar {
-  position: fixed;
-  left: 0;
-  top: 0;
-
-  width: 230px;
-  height: 100vh;
-
-  display: flex;
-  flex-direction: column;
-
-  background: #3b2119;
-  color: white;
-}
-
-
-/* LOGO */
-
-.pegawai-logo {
-  height: 90px;
-
-  display: flex;
-  align-items: center;
-
-  gap: 12px;
-
-  padding: 0 18px;
-
-  border-bottom: 1px solid
-    rgba(255, 255, 255, 0.08);
-}
-
-.pegawai-logo-icon {
-  width: 38px;
-  height: 38px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 10px;
-
-  background: #f1eadc;
-  color: #3b2119;
-}
-
-.pegawai-logo h2 {
-  font-size: 18px;
-  margin: 0;
-}
-
-.pegawai-logo span {
-  display: block;
-
-  margin-top: 2px;
-
-  font-size: 9px;
-
-  color: #c9aaa0;
-}
-
-
-/* MENU */
-
-.pegawai-menu {
-  flex: 1;
-
-  padding: 25px 12px;
-}
-
-.pegawai-menu-title {
-  margin: 0 10px 12px;
-
-  font-size: 9px;
-
-  color: #c9aaa0;
-}
-
-.pegawai-menu-item {
-  height: 42px;
-
-  display: flex;
-  align-items: center;
-
-  gap: 14px;
-
-  padding: 0 12px;
-
-  margin-bottom: 5px;
-
-  border-radius: 8px;
-
-  color: #eadbd5;
-
-  text-decoration: none;
-
-  font-size: 14px;
-
-  transition: 0.2s ease;
-}
-
-.pegawai-menu-item:hover {
-  background: rgba(255, 255, 255, 0.07);
-}
-
-.pegawai-menu-item.active {
-  background: #f1eadc;
-  color: #3b2119;
-}
-
-
-/* USER */
-
-.pegawai-sidebar-bottom {
-  padding: 15px 12px 20px;
-}
-
-.pegawai-user {
-  display: flex;
-  align-items: center;
-
-  gap: 10px;
-
-  padding: 10px;
-
-  border-top: 1px solid
-    rgba(255, 255, 255, 0.1);
-}
-
-.pegawai-avatar,
-.pegawai-navbar-avatar {
-  width: 34px;
-  height: 34px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 50%;
-
-  background: #f1eadc;
-  color: #3b2119;
-
-  font-weight: bold;
-}
-
-.pegawai-user strong {
-  display: block;
-
-  font-size: 12px;
-}
-
-.pegawai-user small {
-  display: block;
-
-  margin-top: 2px;
-
-  font-size: 9px;
-
-  color: #eadbd5;
-}
-
-
-/* LOGOUT */
-
-.pegawai-logout {
-  width: 100%;
-  height: 40px;
-
-  display: flex;
-  align-items: center;
-
-  gap: 13px;
-
-  padding: 0 10px;
-
-  border: none;
-  border-radius: 8px;
-
-  background: transparent;
-
-  color: #eadbd5;
-
-  font-size: 14px;
-
-  cursor: pointer;
-
-  text-align: left;
-}
-
-.pegawai-logout:hover {
-  background: rgba(255, 255, 255, 0.07);
-  color: white;
-}
-
-
-/* =================================
-   MAIN
-================================= */
-
-.pegawai-main {
-  width: calc(100% - 230px);
-
-  min-height: 100vh;
-
-  margin-left: 230px;
-}
-
-
-/* NAVBAR */
-
-.pegawai-navbar {
-  height: 90px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  padding: 0 25px;
-
-  background: #3b2119;
-  color: white;
-}
-
-.pegawai-navbar h3 {
-  margin: 0;
-
-  font-size: 17px;
-}
-
-.pegawai-navbar p {
-  margin: 4px 0 0;
-
-  font-size: 11px;
-
-  color: #d8c5bd;
-}
-
-
-/* CONTENT */
-
-.pegawai-content {
-  padding: 28px;
-}
+/* =====================================================
+   PAGE HEADER
+===================================================== */
 
 .pegawai-page-header {
-  margin-bottom: 25px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 24px;
 }
 
-.pegawai-page-header span {
-  font-size: 11px;
+.pegawai-breadcrumb {
+  margin-bottom: 5px;
+  font-size: 10px;
   color: #9b8378;
 }
 
 .pegawai-page-header h1 {
-  margin: 5px 0 0;
-
-  font-size: 27px;
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  color: #2f211c;
 }
 
 .pegawai-page-header p {
-  margin-top: 5px;
-
+  margin: 5px 0 0;
   font-size: 12px;
-
   color: #907a70;
 }
 
+.pegawai-access {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-top: 4px;
+}
 
-/* =================================
-   STAT
-================================= */
+.pegawai-access span {
+  font-size: 10px;
+  color: #9b8378;
+}
+
+.pegawai-access strong {
+  margin-top: 3px;
+  font-size: 13px;
+  color: #3b2119;
+}
+
+
+/* =====================================================
+   WELCOME CARD
+===================================================== */
+
+.pegawai-welcome-card {
+  min-height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 24px 26px;
+  margin-bottom: 18px;
+
+  border-radius: 14px;
+
+  background: #3b2119;
+  color: white;
+
+  box-shadow:
+    0 4px 16px
+    rgba(59, 33, 25, 0.12);
+}
+
+.pegawai-welcome-card h2 {
+  margin: 0 0 7px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.pegawai-welcome-card p {
+  margin: 0;
+  max-width: 600px;
+
+  font-size: 12px;
+  line-height: 1.6;
+
+  color: #eadbd5;
+}
+
+.pegawai-welcome-icon {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.1);
+  color: #f1eadc;
+}
+
+
+/* =====================================================
+   STATISTIC
+===================================================== */
 
 .pegawai-stat-grid {
   display: grid;
 
   grid-template-columns:
-    repeat(4, 1fr);
+    repeat(4, minmax(0, 1fr));
 
   gap: 15px;
 
@@ -299,327 +133,434 @@
 }
 
 .pegawai-stat-card {
-  min-height: 150px;
+  min-height: 145px;
 
   padding: 18px;
 
-  border-radius: 12px;
+  border-radius: 13px;
 
-  background: white;
+  background: #ffffff;
 
   box-shadow:
-    0 2px 10px
-    rgba(59, 33, 25, 0.05);
+    0 2px 12px
+    rgba(59, 33, 25, 0.06);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.pegawai-stat-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 5px 18px
+    rgba(59, 33, 25, 0.09);
 }
 
 .pegawai-stat-icon {
-  width: 34px;
-  height: 34px;
+  width: 35px;
+  height: 35px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 
-  border-radius: 8px;
+  border-radius: 9px;
 
-  background: #f1eadc;
+  background: #f5eee4;
   color: #3b2119;
 }
 
 .pegawai-stat-card > span {
   display: block;
 
-  margin-bottom: 7px;
+  margin-bottom: 6px;
 
   font-size: 11px;
-
   color: #6e5b53;
 }
 
 .pegawai-stat-card strong {
   display: block;
 
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 
-  font-size: 23px;
+  font-size: 24px;
+  line-height: 1.2;
+
+  color: #2f211c;
 }
 
 .pegawai-stat-card small {
   font-size: 9px;
-
   color: #a18c83;
 }
 
 
-/* =================================
-   INFO CARD
-================================= */
+/* =====================================================
+   ACTIVITY CARD
+===================================================== */
 
-.pegawai-info-card {
-  padding: 25px;
+.pegawai-activity-card {
+  overflow: hidden;
 
-  border-radius: 12px;
+  border-radius: 14px;
 
-  background: white;
+  background: #ffffff;
 
   box-shadow:
-    0 2px 10px
-    rgba(59, 33, 25, 0.05);
-}
-
-.pegawai-info-card h2 {
-  margin: 0 0 8px;
-
-  font-size: 18px;
-}
-
-.pegawai-info-card > p {
-  margin: 0 0 20px;
-
-  font-size: 12px;
-
-  color: #8c756b;
-}
-
-.pegawai-access-list {
-  display: grid;
-
-  grid-template-columns:
-    repeat(2, 1fr);
-
-  gap: 10px;
-}
-
-.pegawai-access-list div {
-  display: flex;
-  align-items: center;
-
-  gap: 10px;
-
-  padding: 14px;
-
-  border-radius: 8px;
-
-  background: #f8f5ef;
-
-  font-size: 12px;
-}
-
-.pegawai-access-list svg {
-  color: #3b2119;
+    0 2px 12px
+    rgba(59, 33, 25, 0.06);
 }
 
 
-/* =================================
-   RESPONSIVE
-================================= */
-
-@media (max-width: 900px) {
-
-  .pegawai-stat-grid {
-    grid-template-columns:
-      repeat(2, 1fr);
-  }
-
-}
-
-@media (max-width: 600px) {
-
-  .pegawai-sidebar {
-    width: 70px;
-  }
-
-  .pegawai-logo > div:last-child,
-  .pegawai-menu-item span,
-  .pegawai-menu-title,
-  .pegawai-user > div:last-child,
-  .pegawai-logout span {
-    display: none;
-  }
-
-  .pegawai-main {
-    width: calc(100% - 70px);
-    margin-left: 70px;
-  }
-
-  .pegawai-stat-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .pegawai-access-list {
-    grid-template-columns: 1fr;
-  }
-
-}
-
-/* =========================================
-   PEGAWAI DASHBOARD
-========================================= */
-
-.pegawai-dashboard {
-  width: 100%;
-}
-
-
-/* =========================================
-   ACTIVITY CARD
-========================================= */
-
-.activity-card {
-  background: #ffffff;
-  border-radius: 14px;
-  margin-top: 18px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-}
-
-
-/* =========================================
+/* =====================================================
    ACTIVITY HEADER
-========================================= */
+===================================================== */
 
-.activity-card-header {
-  padding: 24px 26px 18px;
+.pegawai-activity-header {
+  padding: 20px 22px;
+
+  border-bottom:
+    1px solid #eee7dd;
 }
 
-.activity-title-wrapper {
+.pegawai-activity-title {
   display: flex;
   align-items: center;
-  gap: 14px;
+
+  gap: 12px;
 }
 
-.activity-main-icon {
-  width: 44px;
-  height: 44px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: #f3ecdd;
-  color: #42231a;
-
-  border-radius: 9px;
+.pegawai-activity-title .pegawai-stat-icon {
   flex-shrink: 0;
+  margin: 0;
 }
 
-.activity-title-wrapper h2 {
-  margin: 0 0 5px;
-
-  font-size: 18px;
-  font-weight: 700;
-
-  color: #171717;
-}
-
-.activity-title-wrapper p {
+.pegawai-activity-title h2 {
   margin: 0;
 
-  font-size: 13px;
-  color: #666;
-}
-
-
-/* =========================================
-   TABLE
-========================================= */
-
-.activity-table {
-  width: 100%;
-  padding: 0 16px;
-  box-sizing: border-box;
-}
-
-
-/* =========================================
-   TABLE HEADER
-========================================= */
-
-.activity-table-head {
-  display: grid;
-
-  grid-template-columns:
-    80px
-    1.2fr
-    2fr
-    1.6fr
-    1.4fr
-    1.2fr;
-
-  align-items: center;
-
-  min-height: 48px;
-
-  padding: 0 10px;
-
-  border-bottom: 1px solid #eee6dc;
-
-  font-size: 12px;
+  font-size: 17px;
   font-weight: 700;
 
-  color: #292929;
+  color: #2f211c;
+}
+
+.pegawai-activity-title p {
+  margin: 4px 0 0;
+
+  font-size: 10px;
+
+  color: #907a70;
 }
 
 
-/* =========================================
-   TABLE BODY
-========================================= */
+/* =====================================================
+   ACTIVITY TABLE
+===================================================== */
 
-.activity-table-body {
+.pegawai-activity-table {
   width: 100%;
+
+  overflow-x: auto;
 }
 
 
-/* =========================================
-   TABLE ROW
-========================================= */
+/* =====================================================
+   TABLE HEADER + ROW
+===================================================== */
 
-.activity-table-row {
+.pegawai-activity-table-header,
+.pegawai-activity-row {
+  min-width: 760px;
+
   display: grid;
 
   grid-template-columns:
-    80px
-    1.2fr
-    2fr
-    1.6fr
-    1.4fr
-    1.2fr;
+    55px
+    150px
+    minmax(200px, 1.5fr)
+    minmax(150px, 1fr)
+    120px;
 
   align-items: center;
-
-  min-height: 68px;
-
-  padding: 0 10px;
-
-  border-bottom: 1px solid #eee6dc;
-
-  font-size: 13px;
-
-  box-sizing: border-box;
 }
 
-.activity-table-row:last-child {
+.pegawai-activity-table-header {
+  min-height: 42px;
+
+  padding: 0 22px;
+
+  background: #faf7f2;
+
+  border-bottom:
+    1px solid #eee7dd;
+
+  font-size: 9px;
+
+  font-weight: 600;
+
+  color: #8f7a70;
+}
+
+
+/* =====================================================
+   ACTIVITY LIST
+   INI BAGIAN YANG DIBENERIN
+===================================================== */
+
+.pegawai-activity-list {
+  max-height: 335px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  scroll-behavior: smooth;
+
+  scrollbar-width: thin;
+  scrollbar-color: #bda99d #f5eee7;
+}
+
+
+/* =====================================================
+   SCROLLBAR CHROME / EDGE
+===================================================== */
+
+.pegawai-activity-list::-webkit-scrollbar {
+  width: 7px;
+}
+
+.pegawai-activity-list::-webkit-scrollbar-track {
+  background: #f5eee7;
+}
+
+.pegawai-activity-list::-webkit-scrollbar-thumb {
+  background: #bda99d;
+
+  border-radius: 10px;
+}
+
+.pegawai-activity-list::-webkit-scrollbar-thumb:hover {
+  background: #9e887b;
+}
+
+
+/* =====================================================
+   ACTIVITY ROW
+===================================================== */
+
+.pegawai-activity-row {
+  min-height: 67px;
+
+  padding: 0 22px;
+
+  border-bottom:
+    1px solid #f1ebe4;
+
+  transition:
+    background 0.2s ease;
+}
+
+.pegawai-activity-row:last-child {
   border-bottom: none;
 }
 
-
-/* =========================================
-   NO
-========================================= */
-
-.activity-number {
-  font-size: 13px;
-  color: #333;
+.pegawai-activity-row:hover {
+  background: #fcfaf7;
 }
 
 
-/* =========================================
-   BADGE
-========================================= */
+/* =====================================================
+   NUMBER
+===================================================== */
 
-.activity-badge {
+.pegawai-activity-number {
+  font-size: 11px;
+  color: #8f7a70;
+}
+
+
+/* =====================================================
+   ACTIVITY TYPE
+===================================================== */
+
+.pegawai-activity-type {
+  display: flex;
+  align-items: center;
+}
+
+.pegawai-activity-badge {
+  display: inline-flex;
+
+  align-items: center;
+  gap: 6px;
+
+  padding: 6px 9px;
+
+  border-radius: 7px;
+
+  font-size: 9px;
+
+  font-weight: 600;
+}
+
+.pegawai-activity-badge.borrowing {
+  background: #f4e9df;
+  color: #70402d;
+}
+
+.pegawai-activity-badge.returning {
+  background: #eee8df;
+  color: #5f5148;
+}
+
+
+/* =====================================================
+   BOOK
+===================================================== */
+
+.pegawai-activity-book {
+  display: flex;
+
+  flex-direction: column;
+
+  min-width: 0;
+}
+
+.pegawai-activity-book strong {
+  overflow: hidden;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  color: #2f211c;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+}
+
+.pegawai-activity-book small {
+  margin-top: 3px;
+
+  overflow: hidden;
+
+  font-size: 9px;
+
+  color: #a18c83;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+}
+
+
+/* =====================================================
+   BORROWER
+===================================================== */
+
+.pegawai-activity-borrower {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  min-width: 0;
+}
+
+.pegawai-borrower-avatar {
+  width: 27px;
+  height: 27px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #eaded4;
+
+  color: #3b2119;
+
+  font-size: 9px;
+
+  font-weight: 700;
+}
+
+.pegawai-activity-borrower strong {
+  overflow: hidden;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  color: #3b2119;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+}
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+.pegawai-activity-date {
+  font-size: 10px;
+
+  font-weight: 500;
+
+  color: #6e5b53;
+}
+
+
+/* =====================================================
+   EMPTY
+===================================================== */
+
+.pegawai-activity-empty {
+  min-height: 150px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  color: #a18c83;
+
+  font-size: 11px;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.pegawai-activity-footer {
+  display: flex;
+
+  justify-content: center;
+
+  padding: 14px 20px;
+
+  border-top:
+    1px solid #eee7dd;
+}
+
+.pegawai-activity-more {
   display: inline-flex;
 
   align-items: center;
@@ -627,170 +568,76 @@
 
   gap: 7px;
 
-  padding: 6px 10px;
+  padding: 8px 13px;
 
-  border-radius: 6px;
-
-  font-size: 12px;
-  font-weight: 600;
-
-  width: fit-content;
-}
-
-
-/* PEMINJAMAN */
-
-.activity-badge.borrowing {
-  background: #eaf7ee;
-  color: #238443;
-}
-
-
-/* PENGEMBALIAN */
-
-.activity-badge.returning {
-  background: #e9f4ff;
-  color: #1769aa;
-}
-
-
-/* =========================================
-   BUKU
-========================================= */
-
-.activity-book {
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 3px;
-}
-
-.activity-book strong {
-  font-size: 13px;
-  font-weight: 700;
-
-  color: #222;
-}
-
-.activity-book small {
-  font-size: 11px;
-
-  color: #777;
-}
-
-
-/* =========================================
-   PEMINJAM
-========================================= */
-
-.activity-name {
-  font-size: 13px;
-
-  color: #222;
-}
-
-
-/* =========================================
-   TANGGAL
-========================================= */
-
-.activity-date {
-  font-size: 12px;
-
-  color: #333;
-}
-
-
-/* =========================================
-   WAKTU
-========================================= */
-
-.activity-time {
-  font-size: 12px;
-
-  color: #333;
-}
-
-
-/* =========================================
-   EMPTY
-========================================= */
-
-.activity-empty {
-  min-height: 150px;
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-  justify-content: center;
-
-  gap: 10px;
-
-  color: #999;
-
-  font-size: 13px;
-}
-
-
-/* =========================================
-   FOOTER
-========================================= */
-
-.activity-footer {
-  display: flex;
-
-  justify-content: center;
-
-  padding: 16px;
-
-  border-top: 1px solid #eee6dc;
-}
-
-
-.activity-see-all {
-  display: inline-flex;
-
-  align-items: center;
-
-  gap: 8px;
-
-  padding: 9px 16px;
-
-  border: 1px solid #e4ddd4;
-
-  background: #fff;
+  border:
+    1px solid #dfd4ca;
 
   border-radius: 7px;
 
-  color: #333;
+  background: white;
 
-  font-size: 12px;
+  color: #4d382f;
+
+  font-size: 10px;
+
   font-weight: 600;
 
   cursor: pointer;
+
+  transition:
+    0.2s ease;
 }
 
-.activity-see-all:hover {
-  background: #faf7f2;
+.pegawai-activity-more:hover {
+  background: #f7f1ea;
+
+  border-color: #cbb9ad;
 }
 
 
-/* =========================================
+/* =====================================================
    RESPONSIVE
-========================================= */
+===================================================== */
 
-@media (max-width: 1000px) {
+@media (max-width: 1100px) {
 
-  .activity-table {
-    overflow-x: auto;
+  .pegawai-stat-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
   }
 
-  .activity-table-head,
-  .activity-table-row {
-    min-width: 900px;
+}
+
+
+@media (max-width: 700px) {
+
+  .pegawai-dashboard-page {
+    padding: 20px 16px;
+  }
+
+  .pegawai-page-header {
+    flex-direction: column;
+  }
+
+  .pegawai-access {
+    align-items: flex-start;
+  }
+
+  .pegawai-welcome-card {
+    padding: 20px;
+  }
+
+  .pegawai-welcome-icon {
+    display: none;
+  }
+
+  .pegawai-stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pegawai-activity-list {
+    max-height: 300px;
   }
 
 }

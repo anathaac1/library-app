@@ -9,6 +9,11 @@ import Login from "./pages/Login";
 import "./App.css";
 
 // ================================
+// CONTEXT
+// ================================
+import { BookProvider } from "./context/BookContext";
+
+// ================================
 // LAYOUT ADMIN
 // ================================
 import Layout from "./components/Layout";
@@ -48,9 +53,19 @@ function App() {
     const savedUser =
       localStorage.getItem("libraryUser");
 
-    return savedUser
-      ? JSON.parse(savedUser)
-      : null;
+    try {
+
+      return savedUser
+        ? JSON.parse(savedUser)
+        : null;
+
+    } catch {
+
+      localStorage.removeItem("libraryUser");
+
+      return null;
+
+    }
 
   });
 
@@ -77,9 +92,7 @@ function App() {
 
   const handleLogout = () => {
 
-    localStorage.removeItem(
-      "libraryUser"
-    );
+    localStorage.removeItem("libraryUser");
 
     setUser(null);
 
@@ -107,239 +120,307 @@ function App() {
 
   return (
 
-    <Routes>
+    <BookProvider>
 
-      {/* =================================
-          ROOT
-      ================================= */}
+      <Routes>
 
-      <Route
-        path="/"
-        element={
-          <Navigate
-            to={
-              user.role === "admin"
-                ? "/dashboard"
-                : "/pegawai/dashboard"
+        {/* =================================
+            ROOT
+        ================================= */}
+
+        <Route
+          path="/"
+          element={
+            <Navigate
+              to={
+                user.role === "admin"
+                  ? "/dashboard"
+                  : "/pegawai/dashboard"
+              }
+              replace
+            />
+          }
+        />
+
+
+        {/* =================================
+            ================= ADMIN ==========
+            =================================
+        */}
+
+        <Route
+          element={
+            <Layout
+              user={user}
+              onLogout={handleLogout}
+            />
+          }
+        >
+
+          {/* ================================
+              DASHBOARD ADMIN
+          ================================= */}
+
+          <Route
+            path="/dashboard"
+            element={
+              user.role === "admin" ? (
+                <Dashboard />
+              ) : (
+                <Navigate
+                  to="/pegawai/dashboard"
+                  replace
+                />
+              )
             }
-            replace
           />
-        }
-      />
 
 
-      {/* =================================
-          ================= ADMIN =========
-          =================================
-      */}
+          {/* ================================
+              DATA BUKU ADMIN
+          ================================= */}
 
-      <Route element={<Layout />}>
-
-        {/* DASHBOARD ADMIN */}
-
-        <Route
-          path="/dashboard"
-          element={
-            user.role === "admin" ? (
-              <Dashboard />
-            ) : (
-              <Navigate
-                to="/pegawai/dashboard"
-                replace
-              />
-            )
-          }
-        />
-
-
-        {/* DATA BUKU */}
-
-        <Route
-          path="/data-buku"
-          element={
-            user.role === "admin" ? (
-              <DataBuku />
-            ) : (
-              <Navigate
-                to="/pegawai/dashboard"
-                replace
-              />
-            )
-          }
-        />
-
-
-        {/* DATA GENRE */}
-
-        <Route
-          path="/data-genre"
-          element={
-            user.role === "admin" ? (
-              <DataGenre />
-            ) : (
-              <Navigate
-                to="/pegawai/dashboard"
-                replace
-              />
-            )
-          }
-        />
-
-
-        {/* EDIT GENRE */}
-
-        <Route
-          path="/edit-genre/:genre"
-          element={
-            user.role === "admin" ? (
-              <EditGenre />
-            ) : (
-              <Navigate
-                to="/pegawai/dashboard"
-                replace
-              />
-            )
-          }
-        />
-
-
-        {/* PEMINJAMAN ADMIN */}
-
-        <Route
-          path="/peminjaman"
-          element={
-            user.role === "admin" ? (
-              <Peminjaman />
-            ) : (
-              <Navigate
-                to="/pegawai/dashboard"
-                replace
-              />
-            )
-          }
-        />
-
-
-        {/* PENGEMBALIAN ADMIN */}
-
-        <Route
-          path="/pengembalian"
-          element={
-            user.role === "admin" ? (
-              <Pengembalian />
-            ) : (
-              <Navigate
-                to="/pegawai/dashboard"
-                replace
-              />
-            )
-          }
-        />
-
-      </Route>
-
-
-      {/* =================================
-          ================= PEGAWAI =======
-          =================================
-      */}
-
-      <Route
-        element={<PegawaiLayout />}
-      >
-
-        {/* DASHBOARD PEGAWAI */}
-
-        <Route
-          path="/pegawai/dashboard"
-          element={
-            user.role === "pegawai" ? (
-              <PegawaiDashboard />
-            ) : (
-              <Navigate
-                to="/dashboard"
-                replace
-              />
-            )
-          }
-        />
-
-
-        {/* DATA PEGAWAI */}
-
-        <Route
-          path="/pegawai/data-pegawai"
-          element={
-            user.role === "pegawai" ? (
-              <DataPegawai />
-            ) : (
-              <Navigate
-                to="/dashboard"
-                replace
-              />
-            )
-          }
-        />
-
-
-        {/* PEMINJAMAN PEGAWAI */}
-
-        <Route
-          path="/pegawai/peminjaman"
-          element={
-            user.role === "pegawai" ? (
-              <PeminjamanPegawai />
-            ) : (
-              <Navigate
-                to="/dashboard"
-                replace
-              />
-            )
-          }
-        />
-
-
-        {/* PENGEMBALIAN PEGAWAI */}
-
-        <Route
-          path="/pegawai/pengembalian"
-          element={
-            user.role === "pegawai" ? (
-              <PengembalianPegawai />
-            ) : (
-              <Navigate
-                to="/dashboard"
-                replace
-              />
-            )
-          }
-        />
-
-      </Route>
-
-
-      {/* =================================
-          LOGOUT / UNKNOWN PAGE
-      ================================= */}
-
-      <Route
-        path="*"
-        element={
-          <Navigate
-            to={
-              user.role === "admin"
-                ? "/dashboard"
-                : "/pegawai/dashboard"
+          <Route
+            path="/data-buku"
+            element={
+              user.role === "admin" ? (
+                <DataBuku />
+              ) : (
+                <Navigate
+                  to="/pegawai/dashboard"
+                  replace
+                />
+              )
             }
-            replace
           />
-        }
-      />
 
-    </Routes>
+
+          {/* ================================
+              DATA GENRE ADMIN
+          ================================= */}
+
+          <Route
+            path="/data-genre"
+            element={
+              user.role === "admin" ? (
+                <DataGenre />
+              ) : (
+                <Navigate
+                  to="/pegawai/dashboard"
+                  replace
+                />
+              )
+            }
+          />
+
+
+          {/* ================================
+              EDIT GENRE ADMIN
+          ================================= */}
+
+          <Route
+            path="/edit-genre/:genre"
+            element={
+              user.role === "admin" ? (
+                <EditGenre />
+              ) : (
+                <Navigate
+                  to="/pegawai/dashboard"
+                  replace
+                />
+              )
+            }
+          />
+
+
+          {/* ================================
+              PEMINJAMAN ADMIN
+          ================================= */}
+
+          <Route
+            path="/peminjaman"
+            element={
+              user.role === "admin" ? (
+                <Peminjaman />
+              ) : (
+                <Navigate
+                  to="/pegawai/dashboard"
+                  replace
+                />
+              )
+            }
+          />
+
+
+          {/* ================================
+              PENGEMBALIAN ADMIN
+          ================================= */}
+
+          <Route
+            path="/pengembalian"
+            element={
+              user.role === "admin" ? (
+                <Pengembalian />
+              ) : (
+                <Navigate
+                  to="/pegawai/dashboard"
+                  replace
+                />
+              )
+            }
+          />
+
+        </Route>
+
+
+        {/* =================================
+            ================= PEGAWAI ========
+            =================================
+        */}
+
+        <Route
+          element={
+            <PegawaiLayout
+              user={user}
+              onLogout={handleLogout}
+            />
+          }
+        >
+
+          {/* ================================
+              DASHBOARD PEGAWAI
+          ================================= */}
+
+          <Route
+            path="/pegawai/dashboard"
+            element={
+              user.role === "pegawai" ? (
+                <PegawaiDashboard />
+              ) : (
+                <Navigate
+                  to="/dashboard"
+                  replace
+                />
+              )
+            }
+          />
+
+
+          {/* ================================
+              DATA BUKU PEGAWAI
+
+              MENGGUNAKAN DataBuku YANG SAMA
+              DENGAN ADMIN
+
+              Jadi:
+              Admin tambah buku
+                    ↓
+              BookContext
+                    ↓
+              Data Buku Pegawai
+
+              Data otomatis sama.
+          ================================= */}
+
+          <Route
+            path="/pegawai/data-buku"
+            element={
+              user.role === "pegawai" ? (
+                <DataBuku />
+              ) : (
+                <Navigate
+                  to="/dashboard"
+                  replace
+                />
+              )
+            }
+          />
+
+
+          {/* ================================
+              DATA PEGAWAI
+          ================================= */}
+
+          <Route
+            path="/pegawai/data-pegawai"
+            element={
+              user.role === "pegawai" ? (
+                <DataPegawai />
+              ) : (
+                <Navigate
+                  to="/dashboard"
+                  replace
+                />
+              )
+            }
+          />
+
+
+          {/* ================================
+              PEMINJAMAN PEGAWAI
+          ================================= */}
+
+          <Route
+            path="/pegawai/peminjaman"
+            element={
+              user.role === "pegawai" ? (
+                <PeminjamanPegawai />
+              ) : (
+                <Navigate
+                  to="/dashboard"
+                  replace
+                />
+              )
+            }
+          />
+
+
+          {/* ================================
+              PENGEMBALIAN PEGAWAI
+          ================================= */}
+
+          <Route
+            path="/pegawai/pengembalian"
+            element={
+              user.role === "pegawai" ? (
+                <PengembalianPegawai />
+              ) : (
+                <Navigate
+                  to="/dashboard"
+                  replace
+                />
+              )
+            }
+          />
+
+        </Route>
+
+
+        {/* =================================
+            UNKNOWN ROUTE
+        ================================= */}
+
+        <Route
+          path="*"
+          element={
+            <Navigate
+              to={
+                user.role === "admin"
+                  ? "/dashboard"
+                  : "/pegawai/dashboard"
+              }
+              replace
+            />
+          }
+        />
+
+      </Routes>
+
+    </BookProvider>
 
   );
 
 }
+
 
 export default App;

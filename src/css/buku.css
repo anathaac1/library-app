@@ -4,6 +4,9 @@
 
 .data-buku-page {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 
@@ -16,35 +19,52 @@
   flex-direction: column;
   align-items: flex-start;
 
+  width: 100%;
   margin-top: 10px;
-  margin-bottom: 30px;
-}
+  margin-bottom: 24px;
 
+  box-sizing: border-box;
+}
 
 .data-buku-page .page-header > div:first-child {
   display: flex;
   flex-direction: column;
+  min-width: 0;
+}
+
+.data-buku-page .breadcrumb {
+  margin-bottom: 5px;
+}
+
+.data-buku-page .page-header h1 {
+  margin: 0 0 4px;
+}
+
+.data-buku-page .page-header p {
+  margin: 0;
 }
 
 
 /* =================================
-   SEARCH + FILTER + TOMBOL TAMBAH
+   SEARCH + GENRE + TAMBAH
 ================================= */
 
 .page-actions {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 
   gap: 10px;
 
-  margin-top: 20px;
-
   width: 100%;
+  margin-top: 16px;
+
+  box-sizing: border-box;
 }
 
 
 /* =================================
-   SEARCH BAR
+   SEARCH BOX
 ================================= */
 
 .search-box {
@@ -54,7 +74,9 @@
   display: flex;
   align-items: center;
 
-  background: white;
+  flex-shrink: 1;
+
+  background: #ffffff;
 
   border: 1px solid #e2d8cc;
   border-radius: 8px;
@@ -64,43 +86,43 @@
   box-sizing: border-box;
 
   transition: 0.2s ease;
-
-  flex-shrink: 0;
 }
-
 
 .search-box:focus-within {
   border-color: #3b2119;
 
   box-shadow:
-    0 0 0 2px rgba(59, 33, 25, 0.08);
+    0 0 0 3px rgba(59, 33, 25, 0.07);
 }
 
 
+/* ICON SEARCH */
+
 .search-icon {
+  flex-shrink: 0;
+
   color: #8d7b72;
 
   margin-right: 8px;
-
-  line-height: 1;
-
-  flex-shrink: 0;
 }
 
 
+/* INPUT */
+
 .search-box input {
   width: 100%;
+  min-width: 0;
 
   border: none;
   outline: none;
 
   background: transparent;
 
-  font-size: 11px;
-
   color: #30221d;
-}
 
+  font-family: inherit;
+  font-size: 11px;
+}
 
 .search-box input::placeholder {
   color: #a6968d;
@@ -120,55 +142,58 @@
   flex-shrink: 0;
 }
 
-
 .genre-filter select {
-  width: 100%;
-  height: 100%;
-
   appearance: none;
   -webkit-appearance: none;
 
-  border: 1px solid #e2d8cc;
+  width: 100%;
+  height: 100%;
 
+  padding: 0 36px 0 14px;
+
+  border: 1px solid #e2d8cc;
   border-radius: 8px;
 
-  background: white;
+  background: #ffffff;
 
-  color: #30221d;
+  color: #4b3931;
 
-  padding: 0 34px 0 12px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
 
   outline: none;
 
-  font-family: inherit;
-
-  font-size: 11px;
-
   cursor: pointer;
 
-  transition: 0.2s ease;
-
   box-sizing: border-box;
+
+  transition: 0.2s ease;
 }
 
+.genre-filter select:hover {
+  border-color: #cdbeb3;
+}
 
 .genre-filter select:focus {
   border-color: #3b2119;
 
   box-shadow:
-    0 0 0 2px rgba(59, 33, 25, 0.08);
+    0 0 0 3px rgba(59, 33, 25, 0.07);
 }
 
+
+/* ICON DROPDOWN */
 
 .genre-filter-icon {
   position: absolute;
 
-  right: 11px;
   top: 50%;
+  right: 12px;
 
   transform: translateY(-50%);
 
-  color: #8d7b72;
+  color: #806e65;
 
   pointer-events: none;
 }
@@ -179,29 +204,28 @@
 ================================= */
 
 .btn-tambah {
-  border: none;
+  height: 40px;
 
-  border-radius: 8px;
+  flex-shrink: 0;
 
   padding: 0 18px;
 
-  height: 40px;
+  border: none;
+  border-radius: 8px;
 
   background: #3b2119;
+  color: #ffffff;
 
-  color: white;
-
-  font-size: 12px;
-
+  font-family: inherit;
+  font-size: 11px;
   font-weight: 600;
+
+  white-space: nowrap;
 
   cursor: pointer;
 
   transition: 0.2s ease;
-
-  flex-shrink: 0;
 }
-
 
 .btn-tambah:hover {
   background: #542f24;
@@ -221,59 +245,24 @@
   display: grid;
 
   /*
-    CARD TETAP 215px.
-    Jumlah kolom mengikuti ruang yang tersedia.
-    Kalau hasil search cuma 1,
-    card TIDAK akan melebar.
+    CARD AKAN MENYESUAIKAN
+    DENGAN LEBAR AREA.
   */
 
   grid-template-columns:
-    repeat(auto-fill, 215px);
+    repeat(
+      auto-fill,
+      minmax(210px, 1fr)
+    );
 
   gap: 18px;
 
   width: 100%;
-
-  max-height: calc(100vh - 380px);
-
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  padding-right: 10px;
+  max-width: 100%;
 
   box-sizing: border-box;
 
-  align-content: start;
-
-  justify-content: start;
-}
-
-
-/* =================================
-   SCROLLBAR GRID BUKU
-================================= */
-
-.book-grid::-webkit-scrollbar {
-  width: 7px;
-}
-
-
-.book-grid::-webkit-scrollbar-track {
-  background: #f1eae2;
-
-  border-radius: 10px;
-}
-
-
-.book-grid::-webkit-scrollbar-thumb {
-  background: #b8a69c;
-
-  border-radius: 10px;
-}
-
-
-.book-grid::-webkit-scrollbar-thumb:hover {
-  background: #8d7569;
+  align-items: start;
 }
 
 
@@ -282,24 +271,23 @@
 ================================= */
 
 .book-card {
-  width: 215px;
+  width: 100%;
+  min-width: 0;
 
-  background: white;
+  background: #ffffff;
 
   border: 1px solid #e7dfd4;
-
   border-radius: 12px;
 
   overflow: hidden;
+
+  box-sizing: border-box;
 
   transition: 0.2s ease;
 
   box-shadow:
     0 2px 8px rgba(59, 33, 25, 0.04);
-
-  box-sizing: border-box;
 }
-
 
 .book-card:hover {
   transform: translateY(-4px);
@@ -310,35 +298,30 @@
 
 
 /* =================================
-   AREA COVER
+   COVER
 ================================= */
 
 .book-cover-wrapper {
   width: 100%;
-
-  height: 188px;
+  height: 210px;
 
   background: #542f24;
 
   display: flex;
-
   align-items: center;
   justify-content: center;
 
-  padding: 14px;
+  padding: 15px;
 
   box-sizing: border-box;
 }
 
-
-/* =================================
-   FOTO COVER
-================================= */
-
 .book-cover {
-  width: 108px;
+  width: 125px;
+  height: 180px;
 
-  height: 155px;
+  max-width: 100%;
+  max-height: 100%;
 
   object-fit: cover;
 
@@ -357,36 +340,41 @@
 
 .book-info {
   padding: 14px;
+
+  box-sizing: border-box;
 }
 
-
-/* =================================
-   JUDUL
-================================= */
-
 .book-info h3 {
-  font-size: 13px;
+  margin: 0 0 6px;
 
   color: #30221d;
 
-  margin: 0 0 5px;
-
+  font-size: 13px;
   line-height: 1.3;
+
+  /*
+    Supaya judul panjang tidak
+    merusak tinggi card.
+  */
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+
+  overflow: hidden;
 }
 
-
-/* =================================
-   PENULIS
-================================= */
-
 .book-author {
-  font-size: 10px;
+  margin: 0 0 12px;
 
   color: #8d7b72;
 
-  margin: 0 0 11px;
-
+  font-size: 10px;
   line-height: 1.4;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 
@@ -396,20 +384,20 @@
 
 .book-meta {
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
 
-  gap: 6px;
+  gap: 8px;
 
-  margin-bottom: 12px;
+  margin-bottom: 13px;
+
+  min-width: 0;
 }
 
-
 .book-meta span {
-  font-size: 9px;
+  max-width: 70%;
 
+  font-size: 9px;
   color: #6f5d54;
 
   background: #f1eadc;
@@ -419,28 +407,32 @@
   border-radius: 5px;
 
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.book-meta span:last-child {
+  max-width: 35%;
 }
 
 
 /* =================================
-   TOMBOL LIHAT DETAIL
+   BUTTON LIHAT DETAIL
 ================================= */
 
 .btn-lihat {
   width: 100%;
-
-  height: 32px;
+  height: 36px;
 
   border: 1px solid #3b2119;
-
   border-radius: 7px;
 
-  background: white;
+  background: #ffffff;
 
   color: #3b2119;
 
+  font-family: inherit;
   font-size: 10px;
-
   font-weight: 600;
 
   cursor: pointer;
@@ -448,11 +440,9 @@
   transition: 0.2s ease;
 }
 
-
 .btn-lihat:hover {
   background: #3b2119;
-
-  color: white;
+  color: #ffffff;
 
   box-shadow:
     0 4px 10px rgba(59, 33, 25, 0.15);
@@ -464,97 +454,182 @@
 ================================= */
 
 .empty-book {
-  font-size: 12px;
+  grid-column: 1 / -1;
+
+  margin: 20px 0;
 
   color: #8d7b72;
+
+  font-size: 12px;
 }
 
 
 /* =================================
-   RESPONSIVE
+   RESPONSIVE DESKTOP
 ================================= */
 
-@media (max-width: 1100px) {
+/*
+   Layar besar:
+   5-6 card bisa tampil sesuai
+   ruang yang tersedia.
+*/
 
+@media (min-width: 1400px) {
   .book-grid {
     grid-template-columns:
-      repeat(auto-fill, 215px);
+      repeat(
+        auto-fill,
+        minmax(210px, 1fr)
+      );
   }
-
 }
 
 
-@media (max-width: 800px) {
+/* =================================
+   LAPTOP
+================================= */
+
+@media (max-width: 1200px) {
 
   .book-grid {
     grid-template-columns:
-      repeat(auto-fill, 215px);
+      repeat(
+        auto-fill,
+        minmax(200px, 1fr)
+      );
+
+    gap: 16px;
   }
 
+  .book-cover-wrapper {
+    height: 200px;
+  }
+
+  .book-cover {
+    width: 115px;
+    height: 165px;
+  }
 }
 
+
+/* =================================
+   TABLET
+================================= */
+
+@media (max-width: 900px) {
+
+  .page-actions {
+    width: 100%;
+  }
+
+  .search-box {
+    width: 220px;
+  }
+
+  .genre-filter {
+    width: 150px;
+  }
+
+  .book-grid {
+    grid-template-columns:
+      repeat(
+        3,
+        minmax(0, 1fr)
+      );
+  }
+}
+
+
+/* =================================
+   TABLET KECIL
+================================= */
 
 @media (max-width: 700px) {
 
   .page-actions {
-    flex-wrap: wrap;
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(130px, 0.7fr);
+
+    gap: 10px;
   }
-
-}
-
-
-@media (max-width: 550px) {
-
-  .data-buku-page .page-header {
-    flex-direction: column;
-
-    gap: 15px;
-  }
-
-
-  .page-actions {
-    width: 100%;
-
-    margin-top: 15px;
-
-    flex-wrap: wrap;
-  }
-
 
   .search-box {
-    flex: 1;
-
-    min-width: 150px;
+    width: 100%;
   }
-
 
   .genre-filter {
-    flex: 1;
-
-    min-width: 150px;
+    width: 100%;
   }
-
 
   .btn-tambah {
     width: 100%;
-
-    margin-top: 0;
   }
 
+  /*
+    Tombol tambah memenuhi
+    baris berikutnya.
+  */
+
+  .book-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 14px;
+  }
+
+  .book-cover-wrapper {
+    height: 190px;
+  }
+
+  .book-cover {
+    width: 105px;
+    height: 150px;
+  }
+}
+
+
+/* =================================
+   HP
+================================= */
+
+@media (max-width: 480px) {
+
+  .data-buku-page .page-header {
+    margin-bottom: 18px;
+  }
+
+  .page-actions {
+    display: flex;
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 8px;
+  }
+
+  .search-box,
+  .genre-filter,
+  .btn-tambah {
+    width: 100%;
+  }
 
   .book-grid {
     grid-template-columns: 1fr;
 
-    max-height: calc(100vh - 330px);
-
-    padding-right: 5px;
+    gap: 14px;
   }
 
-
-  .book-card {
-    width: 100%;
+  .book-cover-wrapper {
+    height: 210px;
   }
 
+  .book-cover {
+    width: 125px;
+    height: 180px;
+  }
 }
 
 
@@ -570,9 +645,7 @@
   background: rgba(47, 33, 28, 0.45);
 
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 
   padding: 20px;
@@ -582,9 +655,7 @@
   animation: modalFade 0.2s ease;
 }
 
-
 @keyframes modalFade {
-
   from {
     opacity: 0;
   }
@@ -592,7 +663,6 @@
   to {
     opacity: 1;
   }
-
 }
 
 
@@ -602,14 +672,13 @@
 
 .modal-box {
   width: 100%;
-
   max-width: 520px;
 
   max-height: 90vh;
 
   overflow-y: auto;
 
-  background: white;
+  background: #ffffff;
 
   border-radius: 14px;
 
@@ -621,47 +690,20 @@
   animation: modalSlide 0.2s ease;
 }
 
-
-/* =================================
-   SCROLLBAR MODAL
-================================= */
-
-.modal-box::-webkit-scrollbar {
-  width: 6px;
-}
-
-
-.modal-box::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-
-.modal-box::-webkit-scrollbar-thumb {
-  background: #c9bbb1;
-
-  border-radius: 10px;
-}
-
-
-.modal-box::-webkit-scrollbar-thumb:hover {
-  background: #a89589;
-}
-
-
 @keyframes modalSlide {
-
   from {
     opacity: 0;
-
-    transform: translateY(10px) scale(0.98);
+    transform:
+      translateY(10px)
+      scale(0.98);
   }
 
   to {
     opacity: 1;
-
-    transform: translateY(0) scale(1);
+    transform:
+      translateY(0)
+      scale(1);
   }
-
 }
 
 
@@ -673,7 +715,6 @@
   display: flex;
 
   align-items: flex-start;
-
   justify-content: space-between;
 
   gap: 20px;
@@ -683,42 +724,36 @@
   border-bottom: 1px solid #eee7df;
 }
 
-
 .modal-header h2 {
   margin: 0;
 
   font-size: 18px;
-
   color: #2f211c;
 }
-
 
 .modal-header p {
   margin: 5px 0 0;
 
   font-size: 10px;
-
   color: #907a70;
 }
 
 
 /* =================================
-   CLOSE
+   MODAL CLOSE
 ================================= */
 
 .modal-close {
   width: 32px;
-
   height: 32px;
 
+  flex-shrink: 0;
+
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 
   border: none;
-
   border-radius: 7px;
 
   background: #faf7f2;
@@ -728,14 +763,10 @@
   cursor: pointer;
 
   transition: 0.2s ease;
-
-  flex-shrink: 0;
 }
-
 
 .modal-close:hover {
   background: #f1e8df;
-
   color: #3b2119;
 }
 
@@ -750,52 +781,44 @@
   gap: 22px;
 
   padding: 22px;
-}
 
+  box-sizing: border-box;
+}
 
 .detail-cover {
   width: 130px;
-
   height: 185px;
+
+  flex-shrink: 0;
 
   background: #faf7f2;
 
   border-radius: 8px;
 
   overflow: hidden;
-
-  flex-shrink: 0;
 }
-
 
 .detail-cover img {
   width: 100%;
-
   height: 100%;
 
   object-fit: cover;
 }
 
-
 .detail-info {
   flex: 1;
-
   min-width: 0;
 }
-
 
 .detail-info h3 {
   margin: 0 0 18px;
 
   font-size: 17px;
-
   color: #30221d;
 }
 
-
 .detail-row {
   display: flex;
-
   flex-direction: column;
 
   gap: 4px;
@@ -805,17 +828,13 @@
   border-bottom: 1px solid #f0ebe5;
 }
 
-
 .detail-row span {
   font-size: 9px;
-
   color: #9b8378;
 }
 
-
 .detail-row strong {
   font-size: 11px;
-
   color: #55443d;
 }
 
@@ -826,19 +845,17 @@
 
 .book-form {
   padding: 20px;
+  box-sizing: border-box;
 }
-
 
 .form-group {
   display: flex;
-
   flex-direction: column;
 
   gap: 7px;
 
   margin-bottom: 15px;
 }
-
 
 .form-group label {
   font-size: 10px;
@@ -848,10 +865,9 @@
   color: #55443d;
 }
 
-
-.form-group input {
+.form-group input,
+.form-group select {
   width: 100%;
-
   height: 40px;
 
   padding: 0 11px;
@@ -859,40 +875,27 @@
   box-sizing: border-box;
 
   border: 1px solid #dfd5ca;
-
   border-radius: 7px;
 
   outline: none;
 
-  background: white;
-
+  background: #ffffff;
   color: #30221d;
 
   font-family: inherit;
-
   font-size: 11px;
-
-  transition: 0.2s ease;
 }
 
-
-.form-group input:focus {
+.form-group input:focus,
+.form-group select:focus {
   border-color: #3b2119;
 
   box-shadow:
     0 0 0 3px rgba(59, 33, 25, 0.06);
 }
 
-
 .form-group input::placeholder {
   color: #b19e94;
-}
-
-
-.form-group small {
-  font-size: 9px;
-
-  color: #9b8378;
 }
 
 
@@ -903,7 +906,9 @@
 .form-row {
   display: grid;
 
-  grid-template-columns: 1fr 120px;
+  grid-template-columns:
+    minmax(0, 1fr)
+    120px;
 
   gap: 12px;
 }
@@ -916,23 +921,17 @@
 .modal-footer {
   display: flex;
 
+  justify-content: flex-end;
   align-items: center;
 
-  justify-content: flex-end;
-
   gap: 10px;
-
-  margin-top: 20px;
 
   padding: 15px 20px;
 
   border-top: 1px solid #eee7df;
+
+  box-sizing: border-box;
 }
-
-
-/* =================================
-   SEMUA TOMBOL MODAL
-================================= */
 
 .modal-footer button {
   height: 36px;
@@ -942,17 +941,13 @@
   border-radius: 8px;
 
   font-family: inherit;
-
-  font-size: 12px;
-
+  font-size: 11px;
   font-weight: 600;
 
   cursor: pointer;
 
   display: inline-flex;
-
   align-items: center;
-
   justify-content: center;
 
   gap: 7px;
@@ -961,75 +956,30 @@
 }
 
 
-/* =================================
-   TOMBOL TUTUP
-================================= */
+/* SECONDARY */
 
 .btn-modal-secondary {
-  background: white;
+  background: #ffffff;
 
   color: #5f4a42;
 
   border: 1px solid #d9cbc3;
 }
 
-
 .btn-modal-secondary:hover {
   background: #f7f1eb;
 }
 
 
-/* =================================
-   TOMBOL PRIMARY
-================================= */
-
-.btn-modal-primary {
-  height: 36px;
-
-  padding: 0 15px;
-
-  border: none;
-
-  border-radius: 7px;
-
-  background: #3b2119;
-
-  color: white;
-
-  font-family: inherit;
-
-  font-size: 10px;
-
-  font-weight: 600;
-
-  cursor: pointer;
-
-  transition: 0.2s ease;
-}
-
-
-.btn-modal-primary:hover {
-  background: #542f24;
-
-  transform: translateY(-1px);
-
-  box-shadow:
-    0 3px 8px rgba(59, 33, 25, 0.15);
-}
-
-
-/* =================================
-   TOMBOL EDIT
-================================= */
+/* EDIT */
 
 .btn-modal-edit {
   background: #3b2119;
 
-  color: white;
+  color: #ffffff;
 
   border: 1px solid #3b2119;
 }
-
 
 .btn-modal-edit:hover {
   background: #542f24;
@@ -1040,9 +990,7 @@
 }
 
 
-/* =================================
-   TOMBOL HAPUS
-================================= */
+/* HAPUS */
 
 .btn-modal-danger {
   background: #fff5f4;
@@ -1052,25 +1000,12 @@
   border: 1px solid #e7b7b2;
 }
 
-
 .btn-modal-danger:hover {
   background: #fce8e6;
 
   border-color: #d99a94;
 
   transform: translateY(-1px);
-}
-
-
-/* =================================
-   ICON
-================================= */
-
-.btn-modal-edit svg,
-.btn-modal-danger svg {
-  width: 15px;
-
-  height: 15px;
 }
 
 
@@ -1084,34 +1019,310 @@
     padding: 12px;
   }
 
-
   .detail-content {
     flex-direction: column;
-
     align-items: center;
   }
-
 
   .detail-info {
     width: 100%;
   }
 
-
   .form-row {
     grid-template-columns: 1fr;
   }
 
-
   .modal-footer {
     flex-direction: column-reverse;
-
     align-items: stretch;
   }
 
-
-  .btn-modal-primary,
-  .btn-modal-secondary {
+  .modal-footer button {
     width: 100%;
   }
+}
 
+/* =================================
+   DARK MODE - DATA BUKU
+   Mengikuti style Dashboard
+================================= */
+
+body.dark-mode .data-buku-page {
+  color: #f5eee8;
+}
+
+/* =================================
+   SEARCH
+================================= */
+
+body.dark-mode .search-box {
+  background: #30231e;
+  border-color: #493831;
+}
+
+body.dark-mode .search-box input {
+  color: #f5eee8;
+}
+
+body.dark-mode .search-box input::placeholder {
+  color: #a8958b;
+}
+
+body.dark-mode .search-box .search-icon {
+  color: #b8a69d;
+}
+
+
+/* =================================
+   FILTER GENRE
+================================= */
+
+body.dark-mode .genre-filter select {
+  background: #30231e;
+  border-color: #493831;
+  color: #f5eee8;
+}
+
+body.dark-mode .genre-filter select:focus {
+  border-color: #70564a;
+
+  box-shadow:
+    0 0 0 2px rgba(112, 86, 74, 0.15);
+}
+
+body.dark-mode .genre-filter-icon {
+  color: #b8a69d;
+}
+
+
+/* =================================
+   CARD BUKU
+================================= */
+
+body.dark-mode .book-card {
+  background: #30231e;
+
+  border-color: #493831;
+
+  box-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+body.dark-mode .book-card:hover {
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+
+/* =================================
+   COVER
+================================= */
+
+body.dark-mode .book-cover-wrapper {
+  background: #542f24;
+}
+
+
+/* =================================
+   INFO BUKU
+================================= */
+
+body.dark-mode .book-info h3 {
+  color: #f5eee8;
+}
+
+body.dark-mode .book-author {
+  color: #b8a69d;
+}
+
+
+/* =================================
+   GENRE + STOCK
+================================= */
+
+body.dark-mode .book-meta span {
+  color: #d9c9c0;
+
+  background: #423029;
+}
+
+
+/* =================================
+   BUTTON LIHAT DETAIL
+================================= */
+
+body.dark-mode .btn-lihat {
+  background: #30231e;
+
+  border-color: #70564a;
+
+  color: #f0e4dd;
+}
+
+body.dark-mode .btn-lihat:hover {
+  background: #3b2119;
+
+  border-color: #8b6859;
+
+  color: white;
+}
+
+
+/* =================================
+   EMPTY DATA
+================================= */
+
+body.dark-mode .empty-book {
+  color: #a8958b;
+}
+
+
+/* =================================
+   SCROLLBAR
+================================= */
+
+body.dark-mode .book-grid::-webkit-scrollbar-track {
+  background: #211815;
+}
+
+body.dark-mode .book-grid::-webkit-scrollbar-thumb {
+  background: #4b382f;
+}
+
+body.dark-mode .book-grid::-webkit-scrollbar-thumb:hover {
+  background: #654a3e;
+}
+
+body.dark-mode .data-buku-page::-webkit-scrollbar-track {
+  background: #211815;
+}
+
+body.dark-mode .data-buku-page::-webkit-scrollbar-thumb {
+  background: #4b382f;
+}
+
+body.dark-mode .data-buku-page::-webkit-scrollbar-thumb:hover {
+  background: #654a3e;
+}
+
+
+/* =================================
+   MODAL DATA BUKU
+================================= */
+
+body.dark-mode .modal-overlay {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+body.dark-mode .modal-box {
+  background: #30231e;
+
+  border-color: #493831;
+
+  color: #f5eee8;
+}
+
+body.dark-mode .modal-header h2 {
+  color: #f5eee8;
+}
+
+body.dark-mode .modal-header p {
+  color: #a8958b;
+}
+
+body.dark-mode .modal-close {
+  background: #423029;
+
+  color: #d9c9c0;
+}
+
+body.dark-mode .modal-close:hover {
+  background: #49352d;
+
+  color: white;
+}
+
+
+/* =================================
+   DETAIL BUKU
+================================= */
+
+body.dark-mode .detail-info h3 {
+  color: #f5eee8;
+}
+
+body.dark-mode .detail-row {
+  border-bottom-color: #3a2d27;
+}
+
+body.dark-mode .detail-row span {
+  color: #a8958b;
+}
+
+body.dark-mode .detail-row strong {
+  color: #d9c9c0;
+}
+
+
+/* =================================
+   FORM MODAL
+================================= */
+
+body.dark-mode .form-group label {
+  color: #d9c9c0;
+}
+
+body.dark-mode .form-group input,
+body.dark-mode .form-group select,
+body.dark-mode .form-group textarea {
+  background: #1e1714;
+
+  border-color: #493831;
+
+  color: #f5eee8;
+}
+
+body.dark-mode .form-group input::placeholder,
+body.dark-mode .form-group textarea::placeholder {
+  color: #806f66;
+}
+
+body.dark-mode .form-group small {
+  color: #a8958b;
+}
+
+
+/* =================================
+   MODAL FOOTER
+================================= */
+
+body.dark-mode .modal-footer {
+  border-top-color: #3a2d27;
+}
+
+body.dark-mode .btn-modal-secondary {
+  background: #261d19;
+
+  border-color: #493831;
+
+  color: #d9c9c0;
+}
+
+body.dark-mode .btn-modal-secondary:hover {
+  background: #352822;
+}
+
+
+/* =================================
+   MODAL PRIMARY BUTTON
+================================= */
+
+body.dark-mode .btn-modal-primary {
+  background: #3b2119;
+
+  color: white;
+}
+
+body.dark-mode .btn-modal-primary:hover {
+  background: #542f24;
 }

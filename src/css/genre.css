@@ -1175,3 +1175,301 @@
   }
 
 }
+
+/* =================================
+   DARK MODE - DATA GENRE
+   DISAMAKAN DENGAN DASHBOARD
+================================= */
+
+/* PAGE */
+body.dark-mode .data-genre-page {
+  color: #f5eee8;
+}
+
+body.dark-mode .genre-header .breadcrumb {
+  color: #a9958b;
+}
+
+body.dark-mode .genre-header h1 {
+  color: #f5eee8;
+}
+
+body.dark-mode .genre-header p {
+  color: #b8a69d;
+}
+
+/* SEARCH */
+body.dark-mode .genre-search {
+  background: #261d19;
+  border-color: #493831;
+  color: #b8a69d;
+}
+
+body.dark-mode .genre-search:focus-within {
+  border-color: #80665a;
+  box-shadow: 0 0 0 2px rgba(128, 102, 90, 0.15);
+}
+
+body.dark-mode .genre-search input {
+  background: transparent;
+  color: #f5eee8;
+}
+
+body.dark-mode .genre-search input::placeholder {
+  color: #8f7e75;
+}
+
+/* GRID + SCROLLBAR */
+body.dark-mode .genre-grid {
+  background: transparent;
+}
+
+body.dark-mode .genre-grid::-webkit-scrollbar-track {
+  background: #1e1714;
+}
+
+body.dark-mode .genre-grid::-webkit-scrollbar-thumb {
+  background: #59443a;
+}
+
+body.dark-mode .genre-grid::-webkit-scrollbar-thumb:hover {
+  background: #80665a;
+}
+
+/* CARD - BAGIAN LUAR */
+body.dark-mode .genre-card {
+  background: #261d19;
+  border-color: #493831;
+  color: #f5eee8;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+body.dark-mode .genre-card:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+/* CARD - BAGIAN ATAS */
+body.dark-mode .genre-card-top {
+  background: #261d19;
+}
+
+/* ICON */
+body.dark-mode .genre-icon {
+  background: #3b2a24;
+  border-color: #59443a;
+  color: #f5eee8;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* CONTENT */
+body.dark-mode .genre-content {
+  background: #261d19;
+}
+
+body.dark-mode .genre-content h3,
+body.dark-mode .genre-card h3,
+body.dark-mode .genre-card h4 {
+  color: #f5eee8;
+}
+
+body.dark-mode .genre-content p,
+body.dark-mode .genre-card p,
+body.dark-mode .genre-card small,
+body.dark-mode .genre-count {
+  color: #a9958b;
+}
+
+/* ACTION */
+body.dark-mode .genre-actions {
+  background: #261d19;
+  border-top-color: #493831;
+}
+
+body.dark-mode .btn-lihat-genre {
+  background: #3b2119;
+  border-color: #3b2119;
+  color: #ffffff;
+}
+
+body.dark-mode .btn-lihat-genre:hover {
+  background: #542f24;
+  border-color: #542f24;
+}
+
+body.dark-mode .btn-edit-genre {
+  background: #352822;
+  border-color: #59443a;
+  color: #e8d8cf;
+}
+
+body.dark-mode .btn-edit-genre:hover {
+  background: #49352d;
+  border-color: #80665a;
+  color: #ffffff;
+}
+
+body.dark-mode .btn-delete-genre {
+  background: #33201d;
+  border-color: #67403a;
+  color: #e6aaa2;
+}
+
+body.dark-mode .btn-delete-genre:hover {
+  background: #9d4d43;
+  border-color: #9d4d43;
+  color: #ffffff;
+}
+
+/* EMPTY */
+body.dark-mode .genre-empty,
+body.dark-mode .genre-no-book {
+  color: #a9958b;
+}
+
+/* MODAL */
+body.dark-mode .modal-overlay {
+  background: rgba(0, 0, 0, 0.68);
+}
+
+body.dark-mode .modal-box {
+  background: #261d19;
+  border-color: #493831;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .modal-box::-webkit-scrollbar-track,
+body.dark-mode .genre-book-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+body.dark-mode .modal-box::-webkit-scrollbar-thumb,
+body.dark-mode .genre-book-list::-webkit-scrollbar-thumb {
+  background: #59443a;
+}
+
+body.dark-mode .modal-box::-webkit-scrollbar-thumb:hover,
+body.dark-mode .genre-book-list::-webkit-scrollbar-thumb:hover {
+  background: #80665a;
+}
+
+body.dark-mode .modal-header {
+  border-bottom-color: #3a2d27;
+}
+
+body.dark-mode .modal-header h2 {
+  color: #f5eee8;
+}
+
+body.dark-mode .modal-header p {
+  color: #a9958b;
+}
+
+body.dark-mode .modal-close {
+  background: #352822;
+  color: #d9c9c0;
+}
+
+body.dark-mode .modal-close:hover {
+  background: #49352d;
+  color: #ffffff;
+}
+
+/* FORM */
+body.dark-mode .genre-form label {
+  color: #d9c9c0;
+}
+
+body.dark-mode .genre-form input {
+  background: #1e1714;
+  border-color: #493831;
+  color: #f5eee8;
+}
+
+body.dark-mode .genre-form input::placeholder {
+  color: #806f66;
+}
+
+body.dark-mode .genre-form input:focus {
+  border-color: #80665a;
+  box-shadow: 0 0 0 2px rgba(128, 102, 90, 0.15);
+}
+
+/* MODAL BUTTON */
+body.dark-mode .btn-batal {
+  background: #352822;
+  color: #d9c9c0;
+  border: 1px solid #493831;
+}
+
+body.dark-mode .btn-batal:hover {
+  background: #49352d;
+}
+
+body.dark-mode .btn-simpan {
+  background: #4a281f;
+  color: #ffffff;
+}
+
+body.dark-mode .btn-simpan:hover {
+  background: #63372b;
+}
+
+/* DAFTAR BUKU DALAM GENRE */
+body.dark-mode .genre-book-list {
+  background: transparent;
+}
+
+body.dark-mode .genre-book-item {
+  background: #30231e;
+  border-color: #493831;
+}
+
+body.dark-mode .genre-book-item:hover {
+  background: #3b2a24;
+  border-color: #59443a;
+}
+
+body.dark-mode .genre-book-cover {
+  background: #3b2a24;
+  color: #d9c9c0;
+}
+
+body.dark-mode .genre-book-info h3 {
+  color: #f5eee8;
+}
+
+body.dark-mode .genre-book-info p {
+  color: #a9958b;
+}
+
+body.dark-mode .genre-book-info span {
+  background: #3b2a24;
+  color: #d9c9c0;
+}
+
+/* DETAIL BUKU */
+body.dark-mode .genre-detail-content {
+  color: #f5eee8;
+}
+
+body.dark-mode .genre-detail-cover {
+  background: #3b2a24;
+  color: #a9958b;
+}
+
+body.dark-mode .genre-detail-info h3 {
+  color: #f5eee8;
+}
+
+body.dark-mode .genre-detail-row {
+  border-bottom-color: #3a2d27;
+}
+
+body.dark-mode .genre-detail-row span {
+  color: #a9958b;
+}
+
+body.dark-mode .genre-detail-row strong {
+  color: #d9c9c0;
+}
+

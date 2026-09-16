@@ -1,143 +1,341 @@
 import {
   createContext,
   useContext,
+  useEffect,
   useState,
 } from "react";
 
 import { books as initialBooks } from "../data/dummyBuku";
+import { borrowings as initialBorrowings } from "../data/dummyPeminjaman";
 
-import {
-  borrowings as initialBorrowings,
-} from "../data/dummyPeminjaman";
+const BookContext = createContext(null);
+
+// =====================================================
+// LOCAL STORAGE HELPER
+// =====================================================
+
+const getStorageData = (key, defaultValue) => {
+  try {
+    const saved = localStorage.getItem(key);
+
+    if (saved !== null) {
+      return JSON.parse(saved);
+    }
+
+    return defaultValue;
+  } catch (error) {
+    console.error(`Gagal membaca ${key}:`, error);
+    return defaultValue;
+  }
+};
 
 
-const BookContext = createContext();
-
+// =====================================================
+// PROVIDER
+// =====================================================
 
 export function BookProvider({ children }) {
 
-  // =================================
+  // ===================================================
   // DATA BUKU
-  // =================================
+  // ===================================================
 
-  const [books, setBooks] = useState(initialBooks);
+  const [books, setBooks] = useState(() =>
+    getStorageData(
+      "libraryBooks",
+      initialBooks
+    )
+  );
 
 
-  // =================================
+  // ===================================================
   // DATA GENRE
-  // =================================
+  // ===================================================
 
-  const [genres, setGenres] = useState(() => {
-
-    return [
-      ...new Set(
-        initialBooks
-          .map((book) => book.genre)
-          .filter((genre) => genre !== "")
-      ),
-    ];
-
-  });
-
-
-  // =================================
-  // DATA PEMINJAMAN
-  // =================================
-
-  const [borrowings, setBorrowings] =
-    useState(initialBorrowings);
+  const [genres, setGenres] = useState(() =>
+    getStorageData(
+      "libraryGenres",
+      [
+        ...new Set(
+          initialBooks
+            .map((book) => book.genre)
+            .filter(Boolean)
+        ),
+      ]
+    )
+  );
 
 
-  // =================================
+  // ===================================================
+  // PEMINJAMAN AKTIF
+  //
+  // Isinya hanya buku yang BELUM dikembalikan.
+  // ===================================================
+
+  const [borrowings, setBorrowings] = useState(() =>
+    getStorageData(
+      "libraryBorrowings",
+      initialBorrowings
+    )
+  );
+
+
+  // ===================================================
+  // RIWAYAT SEMUA PEMINJAMAN
+  //
+  // DATA INI TIDAK DIHAPUS ketika buku dikembalikan.
+  //
+  // Dashboard menggunakan data ini.
+  // ===================================================
+
+  const [borrowingHistory, setBorrowingHistory] =
+    useState(() =>
+      getStorageData(
+        "libraryBorrowingHistory",
+        initialBorrowings
+      )
+    );
+
+
+  // ===================================================
   // DATA PENGEMBALIAN
-  // =================================
+  // ===================================================
 
-  const [returns, setReturns] = useState([]);
+  const [returns, setReturns] = useState(() =>
+    getStorageData(
+      "libraryReturns",
+      []
+    )
+  );
 
 
-  // =================================
+  // ===================================================
+  // SIMPAN BUKU
+  // ===================================================
+
+  useEffect(() => {
+    localStorage.setItem(
+      "libraryBooks",
+      JSON.stringify(books)
+    );
+  }, [books]);
+
+
+  // ===================================================
+  // SIMPAN GENRE
+  // ===================================================
+
+  useEffect(() => {
+    localStorage.setItem(
+      "libraryGenres",
+      JSON.stringify(genres)
+    );
+  }, [genres]);
+
+
+  // ===================================================
+  // SIMPAN PEMINJAMAN AKTIF
+  // ===================================================
+
+  useEffect(() => {
+    localStorage.setItem(
+      "libraryBorrowings",
+      JSON.stringify(borrowings)
+    );
+  }, [borrowings]);
+
+
+  // ===================================================
+  // SIMPAN RIWAYAT PEMINJAMAN
+  // ===================================================
+
+  useEffect(() => {
+    localStorage.setItem(
+      "libraryBorrowingHistory",
+      JSON.stringify(borrowingHistory)
+    );
+  }, [borrowingHistory]);
+
+
+  // ===================================================
+  // SIMPAN PENGEMBALIAN
+  // ===================================================
+
+  useEffect(() => {
+    localStorage.setItem(
+      "libraryReturns",
+      JSON.stringify(returns)
+    );
+  }, [returns]);
+
+
+  // ===================================================
   // TAMBAH BUKU
-  // =================================
+  // ===================================================
 
   const addBook = (newBook) => {
 
     const book = {
-      ...newBook,
       id: Date.now(),
+
+      title:
+        newBook.title?.trim() || "",
+
+      author:
+        newBook.author?.trim() || "",
+
+      publisher:
+        newBook.publisher?.trim() || "",
+
+      genre:
+        newBook.genre?.trim() || "",
+
+      stock:
+        Number(newBook.stock) || 0,
+
+      cover:
+        newBook.cover?.trim() || "",
     };
+
 
     setBooks((currentBooks) => [
       ...currentBooks,
       book,
     ]);
 
+
+    // Tambahkan genre kalau belum ada
+
+    if (book.genre) {
+
+      setGenres((currentGenres) => {
+
+        const exists =
+          currentGenres.some(
+            (item) =>
+              item.toLowerCase() ===
+              book.genre.toLowerCase()
+          );
+
+        if (exists) {
+          return currentGenres;
+        }
+
+        return [
+          ...currentGenres,
+          book.genre,
+        ];
+      });
+    }
   };
 
 
-  // =================================
-  // EDIT BUKU
-  // =================================
+  // ===================================================
+  // UPDATE BUKU
+  // ===================================================
 
   const updateBook = (
     bookId,
     updatedData
   ) => {
 
+    const updatedBook = {
+      title:
+        updatedData.title?.trim() || "",
+
+      author:
+        updatedData.author?.trim() || "",
+
+      publisher:
+        updatedData.publisher?.trim() || "",
+
+      genre:
+        updatedData.genre?.trim() || "",
+
+      stock:
+        Number(updatedData.stock) || 0,
+
+      cover:
+        updatedData.cover?.trim() || "",
+    };
+
+
     setBooks((currentBooks) =>
-
       currentBooks.map((book) =>
-
         book.id === bookId
           ? {
               ...book,
-              ...updatedData,
+              ...updatedBook,
             }
           : book
-
       )
-
     );
 
+
+    // Tambahkan genre baru
+
+    if (updatedBook.genre) {
+
+      setGenres((currentGenres) => {
+
+        const exists =
+          currentGenres.some(
+            (item) =>
+              item.toLowerCase() ===
+              updatedBook.genre.toLowerCase()
+          );
+
+        if (exists) {
+          return currentGenres;
+        }
+
+        return [
+          ...currentGenres,
+          updatedBook.genre,
+        ];
+      });
+    }
   };
 
 
-  // =================================
+  // ===================================================
   // HAPUS BUKU
-  // =================================
+  // ===================================================
 
   const deleteBook = (bookId) => {
 
     setBooks((currentBooks) =>
-
       currentBooks.filter(
-        (book) => book.id !== bookId
+        (book) =>
+          book.id !== bookId
       )
-
     );
-
   };
 
 
-  // =================================
+  // ===================================================
   // TAMBAH GENRE
-  // =================================
+  // ===================================================
 
   const addGenre = (newGenre) => {
 
-    const genre = newGenre.trim();
+    const genre =
+      newGenre.trim();
 
     if (!genre) {
       return false;
     }
 
 
-    const alreadyExists = genres.some(
-      (item) =>
-        item.toLowerCase() === genre.toLowerCase()
-    );
+    const exists =
+      genres.some(
+        (item) =>
+          item.toLowerCase() ===
+          genre.toLowerCase()
+      );
 
 
-    if (alreadyExists) {
+    if (exists) {
       return false;
     }
 
@@ -152,52 +350,60 @@ export function BookProvider({ children }) {
   };
 
 
-  // =================================
-  // EDIT GENRE
-  // =================================
+  // ===================================================
+  // UPDATE GENRE
+  // ===================================================
 
   const updateGenre = (
     oldGenre,
     newGenre
   ) => {
 
-    const genre = newGenre.trim();
-
+    const genre =
+      newGenre.trim();
 
     if (!genre) {
       return false;
     }
 
 
-    const alreadyExists = genres.some(
-      (item) =>
-        item !== oldGenre &&
-        item.toLowerCase() === genre.toLowerCase()
-    );
+    const exists =
+      genres.some(
+        (item) =>
+          item !== oldGenre &&
+          item.toLowerCase() ===
+          genre.toLowerCase()
+      );
 
 
-    if (alreadyExists) {
+    if (exists) {
       return false;
     }
 
 
+    // Update daftar genre
+
     setGenres((currentGenres) =>
-      currentGenres.map((item) =>
-        item === oldGenre
-          ? genre
-          : item
+      currentGenres.map(
+        (item) =>
+          item === oldGenre
+            ? genre
+            : item
       )
     );
 
 
+    // Update genre pada buku
+
     setBooks((currentBooks) =>
-      currentBooks.map((book) =>
-        book.genre === oldGenre
-          ? {
-              ...book,
-              genre: genre,
-            }
-          : book
+      currentBooks.map(
+        (book) =>
+          book.genre === oldGenre
+            ? {
+                ...book,
+                genre,
+              }
+            : book
       )
     );
 
@@ -206,102 +412,210 @@ export function BookProvider({ children }) {
   };
 
 
-  // =================================
+  // ===================================================
   // HAPUS GENRE
-  // =================================
+  // ===================================================
 
   const deleteGenre = (genre) => {
 
     setGenres((currentGenres) =>
       currentGenres.filter(
-        (item) => item !== genre
+        (item) =>
+          item !== genre
       )
     );
 
+
+    // Buku yang memakai genre
+    // dibuat tanpa genre
 
     setBooks((currentBooks) =>
-      currentBooks.map((book) =>
-        book.genre === genre
-          ? {
-              ...book,
-              genre: "",
-            }
-          : book
+      currentBooks.map(
+        (book) =>
+          book.genre === genre
+            ? {
+                ...book,
+                genre: "",
+              }
+            : book
       )
     );
-
   };
 
 
-  // =================================
+  // ===================================================
   // TAMBAH PEMINJAMAN
-  // =================================
+  // ===================================================
 
   const addBorrowing = (newBorrowing) => {
 
-    setBorrowings((currentBorrowings) => [
-
-      ...currentBorrowings,
-
-      {
-        ...newBorrowing,
-        id: Date.now(),
-      },
-
-    ]);
+    const book =
+      books.find(
+        (item) =>
+          item.id ===
+          newBorrowing.bukuId
+      );
 
 
-    setBooks((currentBooks) =>
+    // Buku tidak ditemukan
 
-      currentBooks.map((book) =>
+    if (!book) {
 
-        book.id === newBorrowing.bukuId
-          ? {
-              ...book,
-              stock: Math.max(
-                0,
-                book.stock - 1
-              ),
-            }
-          : book
+      return {
+        success: false,
+        message:
+          "Buku tidak ditemukan.",
+      };
+    }
 
-      )
 
+    // Stok habis
+
+    if (book.stock <= 0) {
+
+      return {
+        success: false,
+        message:
+          "Stok buku sedang habis.",
+      };
+    }
+
+
+    // =================================================
+    // DATA PEMINJAMAN
+    // =================================================
+
+    const now = Date.now();
+
+    const borrowingData = {
+
+      ...newBorrowing,
+
+      id: now,
+
+      createdAt: now,
+
+      namaBuku:
+        newBorrowing.namaBuku ||
+        book.title,
+
+      namaPenulis:
+        newBorrowing.namaPenulis ||
+        book.author,
+
+      status:
+        "Sedang Dipinjam",
+    };
+
+
+    // =================================================
+    // PEMINJAMAN AKTIF
+    // =================================================
+
+    setBorrowings(
+      (currentBorrowings) => [
+        ...currentBorrowings,
+        borrowingData,
+      ]
     );
 
+
+    // =================================================
+    // RIWAYAT PEMINJAMAN
+    //
+    // TIDAK AKAN DIHAPUS SAAT DIKEMBALIKAN
+    // =================================================
+
+    setBorrowingHistory(
+      (currentHistory) => [
+        ...currentHistory,
+        borrowingData,
+      ]
+    );
+
+
+    // =================================================
+    // KURANGI STOCK
+    // =================================================
+
+    setBooks((currentBooks) =>
+      currentBooks.map(
+        (item) =>
+          item.id ===
+          newBorrowing.bukuId
+            ? {
+                ...item,
+
+                stock:
+                  Math.max(
+                    0,
+                    item.stock - 1
+                  ),
+              }
+            : item
+      )
+    );
+
+
+    return {
+      success: true,
+
+      message:
+        "Buku berhasil dipinjam.",
+
+      data:
+        borrowingData,
+    };
   };
 
 
-  // =================================
-  // EDIT PEMINJAMAN
-  // =================================
+  // ===================================================
+  // UPDATE PEMINJAMAN
+  // ===================================================
 
   const updateBorrowing = (
     borrowingId,
     updatedData
   ) => {
 
-    setBorrowings((currentBorrowings) =>
+    // Update aktif
 
-      currentBorrowings.map((borrowing) =>
-
-        borrowing.id === borrowingId
-          ? {
-              ...borrowing,
-              ...updatedData,
-            }
-          : borrowing
-
-      )
-
+    setBorrowings(
+      (currentBorrowings) =>
+        currentBorrowings.map(
+          (borrowing) =>
+            borrowing.id ===
+            borrowingId
+              ? {
+                  ...borrowing,
+                  ...updatedData,
+                }
+              : borrowing
+        )
     );
 
+
+    // Update history juga
+
+    setBorrowingHistory(
+      (currentHistory) =>
+        currentHistory.map(
+          (borrowing) =>
+            borrowing.id ===
+            borrowingId
+              ? {
+                  ...borrowing,
+                  ...updatedData,
+                }
+              : borrowing
+        )
+    );
   };
 
 
-  // =================================
+  // ===================================================
   // HAPUS PEMINJAMAN
-  // =================================
+  // ===================================================
 
   const deleteBorrowing = (
     borrowingId
@@ -319,40 +633,55 @@ export function BookProvider({ children }) {
     }
 
 
-    // Kembalikan stock buku
+    // Kembalikan stock
+
     setBooks((currentBooks) =>
+      currentBooks.map(
+        (book) =>
+          book.id ===
+          borrowing.bukuId
+            ? {
+                ...book,
 
-      currentBooks.map((book) =>
-
-        book.id === borrowing.bukuId
-          ? {
-              ...book,
-              stock: book.stock + 1,
-            }
-          : book
-
+                stock:
+                  book.stock + 1,
+              }
+            : book
       )
-
     );
 
 
-    // Hapus peminjaman
+    // Hapus dari peminjaman aktif
+
     setBorrowings(
       (currentBorrowings) =>
-
         currentBorrowings.filter(
           (item) =>
-            item.id !== borrowingId
+            item.id !==
+            borrowingId
         )
-
     );
 
+
+    // Hapus dari history juga
+    //
+    // Karena user benar-benar memilih
+    // menghapus data peminjaman.
+
+    setBorrowingHistory(
+      (currentHistory) =>
+        currentHistory.filter(
+          (item) =>
+            item.id !==
+            borrowingId
+        )
+    );
   };
 
 
-  // =================================
+  // ===================================================
   // KEMBALIKAN BUKU
-  // =================================
+  // ===================================================
 
   const returnBook = (
     borrowingId
@@ -373,19 +702,46 @@ export function BookProvider({ children }) {
     const book =
       books.find(
         (item) =>
-          item.id === borrowing.bukuId
+          item.id ===
+          borrowing.bukuId
       );
 
 
+    const now = new Date();
+
+
+    // =================================================
+    // TANGGAL PENGEMBALIAN
+    // =================================================
+
     const tanggalDikembalikan =
-      new Date().toLocaleDateString(
+      now.toLocaleDateString(
         "id-ID"
       );
 
 
+    const waktuDikembalikan =
+      now.toLocaleTimeString(
+        "id-ID",
+        {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false,
+        }
+      );
+
+
+    // =================================================
+    // DATA PENGEMBALIAN
+    // =================================================
+
     const returnData = {
 
       id: Date.now(),
+
+      createdAt:
+        Date.now(),
 
       borrowingId:
         borrowing.id,
@@ -397,14 +753,14 @@ export function BookProvider({ children }) {
         borrowing.bukuId,
 
       namaBuku:
-        book
-          ? book.title
-          : "Buku",
+        book?.title ||
+        borrowing.namaBuku ||
+        "Buku",
 
       namaPenulis:
-        book
-          ? book.author
-          : "-",
+        book?.author ||
+        borrowing.namaPenulis ||
+        "-",
 
       tanggalPinjam:
         borrowing.tanggalPinjam,
@@ -412,59 +768,83 @@ export function BookProvider({ children }) {
       tanggalJatuhTempo:
         borrowing.tanggalKembali,
 
-      tanggalDikembalikan:
-        tanggalDikembalikan,
+      tanggalDikembalikan,
+
+      waktuDikembalikan,
 
       status:
         "Sudah Dikembalikan",
-
     };
 
 
-    // Masukkan ke pengembalian
-    setReturns((currentReturns) => [
+    // =================================================
+    // SIMPAN KE RIWAYAT PENGEMBALIAN
+    // =================================================
 
-      ...currentReturns,
-
-      returnData,
-
-    ]);
-
-
-    // Tambah stock
-    setBooks((currentBooks) =>
-
-      currentBooks.map((book) =>
-
-        book.id === borrowing.bukuId
-          ? {
-              ...book,
-              stock: book.stock + 1,
-            }
-          : book
-
-      )
-
+    setReturns(
+      (currentReturns) => [
+        ...currentReturns,
+        returnData,
+      ]
     );
 
 
-    // Hapus dari peminjaman
+    // =================================================
+    // TAMBAH STOCK
+    // =================================================
+
+    setBooks((currentBooks) =>
+      currentBooks.map(
+        (book) =>
+          book.id ===
+          borrowing.bukuId
+            ? {
+                ...book,
+
+                stock:
+                  book.stock + 1,
+              }
+            : book
+      )
+    );
+
+
+    // =================================================
+    // HAPUS DARI PEMINJAMAN AKTIF
+    // =================================================
+
     setBorrowings(
       (currentBorrowings) =>
-
         currentBorrowings.filter(
           (item) =>
-            item.id !== borrowingId
+            item.id !==
+            borrowingId
         )
-
     );
 
+
+    // =================================================
+    // JANGAN HAPUS borrowingHistory
+    //
+    // Ini penting!
+    //
+    // Jadi:
+    //
+    // Peminjaman:
+    // borrowingHistory = tetap ada
+    //
+    // Pengembalian:
+    // returns = bertambah
+    //
+    // Peminjaman aktif:
+    // borrowings = berkurang
+    // =================================================
   };
 
 
-  // =================================
+  // ===================================================
   // HAPUS DATA PENGEMBALIAN
-  // =================================
+  // ===================================================
 
   const deleteReturn = (
     returnId
@@ -472,23 +852,20 @@ export function BookProvider({ children }) {
 
     setReturns(
       (currentReturns) =>
-
         currentReturns.filter(
           (item) =>
-            item.id !== returnId
+            item.id !==
+            returnId
         )
-
     );
-
   };
 
 
-  // =================================
-  // VALUE
-  // =================================
+  // ===================================================
+  // CONTEXT VALUE
+  // ===================================================
 
   return (
-
     <BookContext.Provider
       value={{
 
@@ -498,46 +875,51 @@ export function BookProvider({ children }) {
         updateBook,
         deleteBook,
 
-
         // GENRE
         genres,
         addGenre,
         updateGenre,
         deleteGenre,
 
-
-        // PEMINJAMAN
+        // PEMINJAMAN AKTIF
         borrowings,
+
+        // RIWAYAT PEMINJAMAN
+        borrowingHistory,
+
         addBorrowing,
         updateBorrowing,
         deleteBorrowing,
-
 
         // PENGEMBALIAN
         returns,
         returnBook,
         deleteReturn,
-
       }}
     >
-
       {children}
-
     </BookContext.Provider>
-
   );
-
 }
 
 
-// =================================
+// =====================================================
 // CUSTOM HOOK
-// =================================
+// =====================================================
 
 export function useBook() {
 
-  return useContext(
-    BookContext
-  );
+  const context =
+    useContext(BookContext);
 
+
+  if (!context) {
+
+    throw new Error(
+      "useBook harus digunakan di dalam BookProvider."
+    );
+  }
+
+
+  return context;
 }
