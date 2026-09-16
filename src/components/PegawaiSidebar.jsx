@@ -1,269 +1,180 @@
 import {
   House,
   BookOpen,
-  Tags,
   BookMarked,
   Undo2,
   LogOut,
-  UserCircle
+  UserCircle,
 } from "lucide-react";
 
 import {
   useNavigate,
-  useLocation
+  useLocation,
 } from "react-router-dom";
 
-
-function Sidebar({
+function PegawaiSidebar({
   sidebarOpen,
-  onLogout
+  onLogout,
+  user,
 }) {
-
   const navigate = useNavigate();
   const location = useLocation();
-
-
-  // ================================
-  // LOGOUT
-  // ================================
-
-  const handleLogout = () => {
-
-    const yakin = window.confirm(
-      "Apakah kamu yakin ingin keluar dari sistem?"
-    );
-
-    if (yakin) {
-      onLogout();
-    }
-  };
-
 
   return (
     <aside
       className={`sidebar ${
-        sidebarOpen
-          ? "open"
-          : "closed"
+        sidebarOpen ? "open" : "closed"
       }`}
     >
 
-      {/* ================================
-          LOGO
-      ================================= */}
-
+      {/* LOGO */}
       <div className="sidebar-logo">
 
         <div className="logo-icon">
-
           <BookOpen size={22} />
-
         </div>
 
-
         {sidebarOpen && (
-
           <div className="logo-text">
-
-            <h2>
-              SISPER
-            </h2>
-
+            <h2>SISPER</h2>
           </div>
-
         )}
 
       </div>
 
 
-      {/* ================================
-          MENU
-      ================================= */}
-
+      {/* MENU */}
       <div className="sidebar-menu">
 
         {sidebarOpen && (
-
           <p className="menu-title">
-            MENU UTAMA
+            MENU PEGAWAI
           </p>
-
         )}
 
 
         {/* DASHBOARD */}
-
         <div
           className={`menu-item ${
-            location.pathname === "/dashboard"
+            location.pathname === "/pegawai/dashboard"
               ? "active"
               : ""
           }`}
           onClick={() =>
-            navigate("/dashboard")
+            navigate("/pegawai/dashboard")
           }
         >
-
           <House size={19} />
 
           {sidebarOpen && (
-            <span>
-              Dashboard
-            </span>
+            <span>Dashboard</span>
           )}
-
         </div>
 
 
         {/* DATA BUKU */}
-
         <div
           className={`menu-item ${
-            location.pathname === "/data-buku"
+            location.pathname === "/pegawai/data-buku"
               ? "active"
               : ""
           }`}
           onClick={() =>
-            navigate("/data-buku")
+            navigate("/pegawai/data-buku")
           }
         >
-
           <BookOpen size={19} />
 
           {sidebarOpen && (
-            <span>
-              Data Buku
-            </span>
+            <span>Data Buku</span>
           )}
-
-        </div>
-
-
-        {/* DATA GENRE */}
-
-        <div
-          className={`menu-item ${
-            location.pathname === "/data-genre"
-              ? "active"
-              : ""
-          }`}
-          onClick={() =>
-            navigate("/data-genre")
-          }
-        >
-
-          <Tags size={19} />
-
-          {sidebarOpen && (
-            <span>
-              Data Genre
-            </span>
-          )}
-
         </div>
 
 
         {/* PEMINJAMAN */}
-
         <div
           className={`menu-item ${
-            location.pathname === "/peminjaman"
+            location.pathname === "/pegawai/peminjaman"
               ? "active"
               : ""
           }`}
           onClick={() =>
-            navigate("/peminjaman")
+            navigate("/pegawai/peminjaman")
           }
         >
-
           <BookMarked size={19} />
 
           {sidebarOpen && (
-            <span>
-              Peminjaman
-            </span>
+            <span>Peminjaman</span>
           )}
-
         </div>
 
 
         {/* PENGEMBALIAN */}
-
         <div
           className={`menu-item ${
-            location.pathname === "/pengembalian"
+            location.pathname === "/pegawai/pengembalian"
               ? "active"
               : ""
           }`}
           onClick={() =>
-            navigate("/pengembalian")
+            navigate("/pegawai/pengembalian")
           }
         >
-
           <Undo2 size={19} />
 
           {sidebarOpen && (
-            <span>
-              Pengembalian
-            </span>
+            <span>Pengembalian</span>
           )}
-
         </div>
 
       </div>
 
 
-      {/* ================================
-          BOTTOM
-      ================================= */}
-
+      {/* BOTTOM */}
       <div className="sidebar-bottom">
-
-
-        {/* ADMIN */}
 
         <div className="admin-box">
 
           <div className="admin-avatar">
-
             <UserCircle size={20} />
-
           </div>
 
-
           {sidebarOpen && (
-
             <div>
-
               <strong>
-                Admin
+                {user?.username || "Pegawai"}
               </strong>
 
               <small>
-                Administrator
+                Pegawai
               </small>
-
             </div>
-
           )}
 
         </div>
 
 
         {/* LOGOUT */}
-
         <button
           type="button"
           className="logout"
-          onClick={handleLogout}
-        >
+          onClick={() => {
 
+            const yakin = window.confirm(
+              "Apakah kamu yakin ingin keluar dari sistem?"
+            );
+
+            if (yakin) {
+              onLogout();
+            }
+
+          }}
+        >
           <LogOut size={18} />
 
           {sidebarOpen && (
-            <span>
-              Logout
-            </span>
+            <span>Logout</span>
           )}
 
         </button>
@@ -274,5 +185,4 @@ function Sidebar({
   );
 }
 
-
-export default Sidebar;
+export default PegawaiSidebar;

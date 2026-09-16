@@ -1,69 +1,99 @@
-import { useState } from "react";
-import {
-  Sun,
-  Moon,
-} from "lucide-react";
+import { useEffect, useState } from "react";
+import { Sun, Moon, Menu } from "lucide-react";
 
 function Navbar({
   sidebarOpen,
   setSidebarOpen,
+  onMenuClick,
   user,
-  onLogout,
 }) {
-
-  const [darkMode, setDarkMode] =
-    useState(false);
-
-
-  // =================================
+  // ==========================================
   // THEME
-  // =================================
+  // ==========================================
 
-  const handleThemeToggle = () => {
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("libraryTheme") === "dark";
+  });
 
-    setDarkMode(
-      (current) => !current
+  useEffect(() => {
+    const theme = darkMode ? "dark" : "light";
+
+    // Simpan theme
+    localStorage.setItem("libraryTheme", theme);
+
+    // Terapkan ke HTML
+    document.documentElement.setAttribute(
+      "data-theme",
+      theme
     );
 
+    // Sekalian class body supaya kompatibel
+    document.body.classList.toggle(
+      "dark-mode",
+      darkMode
+    );
+
+    document.body.classList.toggle(
+      "light-mode",
+      !darkMode
+    );
+  }, [darkMode]);
+
+  const handleThemeToggle = () => {
+    setDarkMode((current) => !current);
   };
 
 
-  // =================================
-  // LOGOUT
-  // =================================
+  // ==========================================
+  // SIDEBAR
+  // ==========================================
 
-  const handleLogout = () => {
+  const handleMenuClick = () => {
+    if (typeof setSidebarOpen === "function") {
+      setSidebarOpen((current) => !current);
+      return;
+    }
 
-    onLogout();
-
+    if (typeof onMenuClick === "function") {
+      onMenuClick();
+    }
   };
 
+
+  // ==========================================
+  // USER
+  // ==========================================
+
+  const namaUser =
+    user?.nama ||
+    user?.username ||
+    user?.name ||
+    "Admin";
+
+  const initial =
+    namaUser.charAt(0).toUpperCase();
+
+
+  // ==========================================
+  // RENDER
+  // ==========================================
 
   return (
+    <nav className="navbar">
 
-    <nav
-      className={`navbar ${
-        sidebarOpen
-          ? "navbar-open"
-          : "navbar-closed"
-      }`}
-    >
-
-      {/* =================================
-          NAVBAR LEFT
-      ================================= */}
+      {/* =====================================
+          LEFT
+      ===================================== */}
 
       <div className="navbar-left">
 
         <button
+          type="button"
           className="burger-button"
-          onClick={() =>
-            setSidebarOpen(
-              !sidebarOpen
-            )
-          }
+          onClick={handleMenuClick}
+          aria-label="Toggle sidebar"
         >
-          ☰
+          <Menu size={20} />
         </button>
 
         <h3>
@@ -73,21 +103,18 @@ function Navbar({
       </div>
 
 
-      {/* =================================
-          NAVBAR RIGHT
-      ================================= */}
+      {/* =====================================
+          RIGHT
+      ===================================== */}
 
       <div className="navbar-right">
 
-        {/* =================================
-            THEME
-        ================================= */}
+        {/* THEME */}
 
         <button
+          type="button"
           className={`theme-toggle ${
-            darkMode
-              ? "dark"
-              : "light"
+            darkMode ? "dark" : "light"
           }`}
           onClick={handleThemeToggle}
           title={
@@ -95,67 +122,44 @@ function Navbar({
               ? "Gunakan Light Mode"
               : "Gunakan Dark Mode"
           }
+          aria-label="Ganti tema"
         >
-
           {darkMode ? (
-
             <Moon size={17} />
-
           ) : (
-
             <Sun size={17} />
-
           )}
-
         </button>
 
 
-        {/* =================================
-            ADMIN
-        ================================= */}
+        {/* USER */}
 
         <div className="navbar-admin">
 
           <div className="navbar-avatar">
-
-            {user?.nama
-              ? user.nama
-                  .charAt(0)
-                  .toUpperCase()
-              : "A"}
-
+            {initial}
           </div>
-
 
           <div className="navbar-admin-info">
 
             <strong>
-
-              {user?.nama || "Admin"}
-
+              {namaUser}
             </strong>
 
             <small>
-              Administrator
+              {user?.role === "pegawai"
+                ? "Pegawai"
+                : "Administrator"}
             </small>
 
           </div>
 
         </div>
 
-
-        {/* =================================
-            LOGOUT
-        ================================= */}
-
-       
-
       </div>
 
     </nav>
-
   );
-
 }
 
 export default Navbar;

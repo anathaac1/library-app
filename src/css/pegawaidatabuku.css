@@ -1,0 +1,420 @@
+/* =================================
+   DATA BUKU PEGAWAI
+================================= */
+
+.pegawai-data-buku-page {
+  width: 100%;
+  min-height: calc(100vh - 90px);
+  padding: 28px;
+
+  background: #f1eadc;
+  color: #2f211c;
+}
+
+
+/* =================================
+   HEADER
+================================= */
+
+.pegawai-buku-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 20px;
+  margin-bottom: 22px;
+}
+
+.pegawai-buku-breadcrumb {
+  margin-bottom: 5px;
+
+  font-size: 10px;
+  color: #9b8378;
+}
+
+.pegawai-buku-header h1 {
+  margin: 0;
+
+  font-size: 26px;
+  font-weight: 700;
+
+  color: #2f211c;
+}
+
+.pegawai-buku-header p {
+  margin: 5px 0 0;
+
+  font-size: 12px;
+  color: #907a70;
+}
+
+
+/* =================================
+   ACTION
+================================= */
+
+.pegawai-buku-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+
+
+/* =================================
+   SEARCH
+================================= */
+
+.pegawai-buku-search {
+  width: 250px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 0 12px;
+
+  background: white;
+
+  border: 1px solid #e2d7cc;
+  border-radius: 8px;
+
+  color: #8f7a70;
+}
+
+.pegawai-buku-search input {
+  width: 100%;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  font-family: inherit;
+  font-size: 11px;
+
+  color: #2f211c;
+}
+
+.pegawai-buku-search input::placeholder {
+  color: #a18c83;
+}
+
+
+/* =================================
+   FILTER
+================================= */
+
+.pegawai-buku-actions select {
+  height: 40px;
+
+  padding: 0 12px;
+
+  border: 1px solid #e2d7cc;
+  border-radius: 8px;
+
+  background: white;
+
+  color: #4d382f;
+
+  font-family: inherit;
+  font-size: 11px;
+
+  outline: none;
+
+  cursor: pointer;
+}
+
+
+/* =================================
+   INFO
+================================= */
+
+.pegawai-buku-info {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 16px 18px;
+
+  margin-bottom: 18px;
+
+  background: white;
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 2px 12px
+    rgba(59, 33, 25, 0.05);
+}
+
+.pegawai-buku-info-icon {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: #f5eee4;
+  color: #3b2119;
+}
+
+.pegawai-buku-info strong {
+  display: block;
+
+  font-size: 12px;
+  color: #2f211c;
+}
+
+.pegawai-buku-info span {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 9px;
+  color: #9b8378;
+}
+
+
+/* =================================
+   GRID
+================================= */
+
+.pegawai-book-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 16px;
+}
+
+
+/* =================================
+   CARD
+================================= */
+
+.pegawai-book-card {
+  overflow: hidden;
+
+  background: white;
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 2px 12px
+    rgba(59, 33, 25, 0.06);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.pegawai-book-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 6px 18px
+    rgba(59, 33, 25, 0.1);
+}
+
+
+/* =================================
+   COVER
+================================= */
+
+.pegawai-book-cover {
+  width: 100%;
+  height: 220px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f5eee4;
+
+  overflow: hidden;
+}
+
+.pegawai-book-cover img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.pegawai-book-no-cover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #9b8378;
+}
+
+
+/* =================================
+   INFO BUKU
+================================= */
+
+.pegawai-book-info {
+  padding: 16px;
+}
+
+.pegawai-book-info h3 {
+  margin: 0;
+
+  overflow: hidden;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  color: #2f211c;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.pegawai-book-author {
+  margin: 5px 0 12px;
+
+  overflow: hidden;
+
+  font-size: 10px;
+
+  color: #907a70;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+
+/* =================================
+   DETAILS
+================================= */
+
+.pegawai-book-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 8px;
+}
+
+.pegawai-book-details span {
+  padding: 5px 8px;
+
+  border-radius: 6px;
+
+  background: #f5eee4;
+
+  font-size: 9px;
+  color: #70402d;
+}
+
+.pegawai-book-details span:last-child {
+  background: #eee8df;
+  color: #5f5148;
+}
+
+
+/* =================================
+   PUBLISHER
+================================= */
+
+.pegawai-book-publisher {
+  margin-top: 12px;
+
+  font-size: 9px;
+
+  color: #a18c83;
+}
+
+
+/* =================================
+   EMPTY
+================================= */
+
+.pegawai-book-empty {
+  grid-column: 1 / -1;
+
+  min-height: 220px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  color: #a18c83;
+
+  font-size: 11px;
+}
+
+
+/* =================================
+   RESPONSIVE
+================================= */
+
+@media (max-width: 1100px) {
+
+  .pegawai-book-grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+}
+
+@media (max-width: 850px) {
+
+  .pegawai-buku-header {
+    flex-direction: column;
+  }
+
+  .pegawai-buku-actions {
+    width: 100%;
+  }
+
+  .pegawai-buku-search {
+    flex: 1;
+    width: auto;
+  }
+
+  .pegawai-book-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .pegawai-data-buku-page {
+    padding: 20px 16px;
+  }
+
+  .pegawai-buku-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .pegawai-buku-search {
+    width: 100%;
+  }
+
+  .pegawai-buku-actions select {
+    width: 100%;
+  }
+
+  .pegawai-book-grid {
+    grid-template-columns: 1fr;
+  }
+
+}

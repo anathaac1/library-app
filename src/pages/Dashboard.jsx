@@ -12,20 +12,20 @@ import { useBook } from "../context/BookContext";
 
 function Dashboard() {
 
-  // =================================
-  // DATA DARI BOOK CONTEXT
-  // =================================
+  // ==========================================
+  // DATA
+  // ==========================================
 
   const {
-    books,
-    borrowings,
-    returns,
+    books = [],
+    borrowings = [],
+    returns = [],
   } = useBook();
 
 
-  // =================================
+  // ==========================================
   // TOTAL BUKU
-  // =================================
+  // ==========================================
 
   const totalBooks =
     books.reduce(
@@ -35,62 +35,140 @@ function Dashboard() {
     );
 
 
-  // =================================
+  // ==========================================
   // TOTAL GENRE
-  // =================================
+  // ==========================================
 
   const totalGenres =
     new Set(
       books
         .map((book) => book.genre)
-        .filter((genre) => genre)
+        .filter(Boolean)
     ).size;
 
 
-  // =================================
+  // ==========================================
   // PEMINJAMAN AKTIF
-  // =================================
+  // ==========================================
 
   const totalBorrowings =
     borrowings.length;
 
 
-  // =================================
+  // ==========================================
   // TOTAL PENGEMBALIAN
-  // =================================
+  // ==========================================
 
   const totalReturns =
     returns.length;
 
 
-  // =================================
-  // FORMAT TANGGAL
-  // =================================
+  // ==========================================
+  // PARSE TANGGAL
+  // ==========================================
 
-  const formatDate = (date) => {
+  const parseDate = (value) => {
+
+    if (!value) {
+      return null;
+    }
+
+    if (value instanceof Date) {
+      return isNaN(value.getTime())
+        ? null
+        : value;
+    }
+
+    if (typeof value === "number") {
+      const date = new Date(value);
+
+      return isNaN(date.getTime())
+        ? null
+        : date;
+    }
+
+    if (typeof value !== "string") {
+      return null;
+    }
+
+    const text = value.trim();
+
+    if (!text) {
+      return null;
+    }
+
+
+    // DD/MM/YYYY
+
+    if (text.includes("/")) {
+
+      const parts = text.split("/");
+
+      if (parts.length === 3) {
+
+        const day = Number(parts[0]);
+        const month = Number(parts[1]) - 1;
+        const year = Number(parts[2]);
+
+        const date = new Date(
+          year,
+          month,
+          day
+        );
+
+        if (!isNaN(date.getTime())) {
+          return date;
+        }
+      }
+    }
+
+
+    // YYYY-MM-DD
+
+    if (text.includes("-")) {
+
+      const parts = text.split("-");
+
+      if (parts.length === 3) {
+
+        const year = Number(parts[0]);
+        const month = Number(parts[1]) - 1;
+        const day = Number(parts[2]);
+
+        const date = new Date(
+          year,
+          month,
+          day
+        );
+
+        if (!isNaN(date.getTime())) {
+          return date;
+        }
+      }
+    }
+
+
+    const date = new Date(text);
+
+    return isNaN(date.getTime())
+      ? null
+      : date;
+  };
+
+
+  // ==========================================
+  // FORMAT TANGGAL
+  // ==========================================
+
+  const formatDate = (value) => {
+
+    const date = parseDate(value);
 
     if (!date) {
       return "-";
     }
 
-    const parts = date.split("/");
-
-    if (parts.length !== 3) {
-      return date;
-    }
-
-    const day = Number(parts[0]);
-    const month = Number(parts[1]) - 1;
-    const year = Number(parts[2]);
-
-    const parsedDate =
-      new Date(
-        year,
-        month,
-        day
-      );
-
-    return parsedDate.toLocaleDateString(
+    return date.toLocaleDateString(
       "id-ID",
       {
         day: "numeric",
@@ -101,33 +179,9 @@ function Dashboard() {
   };
 
 
-  // =================================
-  // PARSE TANGGAL
-  // =================================
-
-  const parseDate = (date) => {
-
-    if (!date) {
-      return null;
-    }
-
-    const parts = date.split("/");
-
-    if (parts.length !== 3) {
-      return null;
-    }
-
-    return new Date(
-      Number(parts[2]),
-      Number(parts[1]) - 1,
-      Number(parts[0])
-    );
-  };
-
-
-  // =================================
+  // ==========================================
   // HARI INI
-  // =================================
+  // ==========================================
 
   const today = new Date();
 
@@ -137,11 +191,6 @@ function Dashboard() {
     0,
     0
   );
-
-
-  // =================================
-  // FORMAT HARI INI
-  // =================================
 
   const todayText =
     today.toLocaleDateString(
@@ -155,30 +204,78 @@ function Dashboard() {
     );
 
 
-  // =================================
-  // PEMINJAMAN TERLAMBAT
-  // =================================
+  // ==========================================
+  // CEK PEMINJAMAN SUDAH DIKEMBALIKAN
+  // ==========================================
+
+  const isAlreadyReturned = (borrowing) => {
+
+    if (!borrowing) {
+      return false;
+    }
+
+    // Kalau ada status pengembalian
+    if (
+      borrowing.status === "dikembalikan" ||
+      borrowing.status === "returned" ||
+      borrowing.status === "selesai"
+    ) {
+      return true;
+    }
+
+    // Cek berdasarkan ID peminjaman
+    const borrowingId =
+      borrowing.id ??
+      borrowing.peminjamanId;
+
+    if (borrowingId != null) {
+
+      const found = returns.some(
+        (item) =>
+          String(
+            item.peminjamanId ??
+            item.borrowingId ??
+            item.idPeminjaman
+          ) === String(borrowingId)
+      );
+
+      if (found) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+
+  // ==========================================
+  // BELUM DIKEMBALIKAN / TERLAMBAT
+  // ==========================================
 
   const overdueBorrowings =
     borrowings
-      .filter((borrowing) => {
+      .filter(
+        (borrowing) =>
+          !isAlreadyReturned(borrowing)
+      )
+      .map((borrowing) => {
 
         const dueDate =
           parseDate(
             borrowing.tanggalKembali
           );
 
-        return (
-          dueDate &&
-          dueDate < today
-        );
+        if (!dueDate) {
+          return null;
+        }
 
-      })
-      .map((borrowing) => {
-
-        const dueDate =
-          parseDate(
-            borrowing.tanggalKembali
+        const book =
+          books.find(
+            (item) =>
+              String(item.id) ===
+              String(
+                borrowing.bukuId
+              )
           );
 
         const difference =
@@ -191,95 +288,123 @@ function Dashboard() {
             (1000 * 60 * 60 * 24)
           );
 
-        const book =
-          books.find(
-            (item) =>
-              item.id === borrowing.bukuId
-          );
-
         return {
           ...borrowing,
 
           bookTitle:
+            borrowing.namaBuku ||
+            borrowing.judulBuku ||
+            borrowing.bookTitle ||
             book?.title ||
             "Buku tidak ditemukan",
 
           daysLate,
+          dueDate,
         };
+      })
+      .filter(
+        (borrowing) =>
+          borrowing &&
+          borrowing.dueDate < today
+      );
 
-      });
 
-
-  // =================================
-  // AKTIVITAS TERBARU
-  // =================================
+  // ==========================================
+  // AKTIVITAS PEMINJAMAN
+  // ==========================================
 
   const borrowingActivities =
-    borrowings.map((borrowing) => {
+    borrowings.map(
+      (borrowing, index) => {
 
-      const book =
-        books.find(
-          (item) =>
-            item.id === borrowing.bukuId
-        );
+        const book =
+          books.find(
+            (item) =>
+              String(item.id) ===
+              String(
+                borrowing.bukuId
+              )
+          );
 
-      return {
-        id:
-          `borrow-${borrowing.id}`,
+        const tanggal =
+          borrowing.tanggalPinjam ||
+          borrowing.createdAt ||
+          null;
 
-        type:
-          "peminjaman",
+        return {
+          id:
+            `borrow-${borrowing.id ?? index}`,
 
-        name:
-          borrowing.namaPeminjam,
+          type:
+            "peminjaman",
 
-        book:
-          book?.title ||
-          "Buku tidak ditemukan",
+          name:
+            borrowing.namaPeminjam ||
+            borrowing.peminjam ||
+            "Pengguna",
 
-        date:
-          parseDate(
-            borrowing.tanggalPinjam
-          ),
+          book:
+            borrowing.namaBuku ||
+            borrowing.judulBuku ||
+            borrowing.bookTitle ||
+            book?.title ||
+            "Buku tidak ditemukan",
 
-        dateText:
-          formatDate(
-            borrowing.tanggalPinjam
-          ),
-      };
+          date:
+            parseDate(tanggal),
 
-    });
+          dateText:
+            formatDate(tanggal),
+        };
+      }
+    );
 
+
+  // ==========================================
+  // AKTIVITAS PENGEMBALIAN
+  // ==========================================
 
   const returnActivities =
-    returns.map((item) => {
+    returns.map(
+      (item, index) => {
 
-      return {
-        id:
-          `return-${item.id}`,
+        const tanggal =
+          item.tanggalDikembalikan ||
+          item.tanggalPengembalian ||
+          item.createdAt ||
+          null;
 
-        type:
-          "pengembalian",
+        return {
+          id:
+            `return-${item.id ?? index}`,
 
-        name:
-          item.namaPeminjam,
+          type:
+            "pengembalian",
 
-        book:
-          item.namaBuku,
+          name:
+            item.namaPeminjam ||
+            item.peminjam ||
+            "Pengguna",
 
-        date:
-          parseDate(
-            item.tanggalDikembalikan
-          ),
+          book:
+            item.namaBuku ||
+            item.judulBuku ||
+            item.bookTitle ||
+            "Buku tidak ditemukan",
 
-        dateText:
-          formatDate(
-            item.tanggalDikembalikan
-          ),
-      };
+          date:
+            parseDate(tanggal),
 
-    });
+          dateText:
+            formatDate(tanggal),
+        };
+      }
+    );
 
+
+  // ==========================================
+  // GABUNG AKTIVITAS
+  // ==========================================
 
   const recentActivities =
     [
@@ -288,44 +413,46 @@ function Dashboard() {
     ]
       .sort((a, b) => {
 
-        if (!a.date) return 1;
-        if (!b.date) return -1;
+        if (!a.date) {
+          return 1;
+        }
+
+        if (!b.date) {
+          return -1;
+        }
 
         return (
           b.date.getTime() -
           a.date.getTime()
         );
-
       })
       .slice(0, 5);
 
 
-  // =================================
-  // INISIAL NAMA
-  // =================================
+  // ==========================================
+  // INITIAL
+  // ==========================================
 
-  const getInitial =
-    (name) => {
+  const getInitial = (name) => {
 
-      if (!name) {
-        return "?";
-      }
+    if (!name) {
+      return "?";
+    }
 
-      return name
-        .charAt(0)
-        .toUpperCase();
+    return name
+      .charAt(0)
+      .toUpperCase();
+  };
 
-    };
 
+  // ==========================================
+  // RENDER
+  // ==========================================
 
   return (
-
     <div className="dashboard">
 
-
-      {/* =================================
-          HEADER
-      ================================= */}
+      {/* HEADER */}
 
       <div className="page-header">
 
@@ -340,13 +467,11 @@ function Dashboard() {
           </h1>
 
           <p>
-            Selamat datang kembali di sistem perpustakaan.
+            Selamat datang kembali di
+            sistem perpustakaan.
           </p>
 
         </div>
-
-
-        {/* TANGGAL */}
 
         <div className="today">
 
@@ -363,26 +488,17 @@ function Dashboard() {
       </div>
 
 
-      {/* =================================
-          STAT CARD
-      ================================= */}
+      {/* STATISTIC */}
 
       <div className="stat-grid">
-
-
-        {/* =================================
-            TOTAL BUKU
-        ================================= */}
 
         <div className="stat-card">
 
           <div className="stat-icon">
-
             <BookOpen
               size={21}
               strokeWidth={1.8}
             />
-
           </div>
 
           <span>
@@ -400,19 +516,13 @@ function Dashboard() {
         </div>
 
 
-        {/* =================================
-            TOTAL GENRE
-        ================================= */}
-
         <div className="stat-card">
 
           <div className="stat-icon">
-
             <Tags
               size={21}
               strokeWidth={1.8}
             />
-
           </div>
 
           <span>
@@ -430,19 +540,13 @@ function Dashboard() {
         </div>
 
 
-        {/* =================================
-            PEMINJAMAN
-        ================================= */}
-
         <div className="stat-card">
 
           <div className="stat-icon">
-
             <BookMarked
               size={21}
               strokeWidth={1.8}
             />
-
           </div>
 
           <span>
@@ -460,20 +564,13 @@ function Dashboard() {
         </div>
 
 
-        {/* =================================
-            PENGEMBALIAN
-        ================================= */}
-
-     
         <div className="stat-card">
 
           <div className="stat-icon">
-
             <RotateCcw
               size={21}
               strokeWidth={1.8}
             />
-
           </div>
 
           <span>
@@ -493,16 +590,11 @@ function Dashboard() {
       </div>
 
 
-      {/* =================================
-          DASHBOARD BOTTOM
-      ================================= */}
+      {/* BOTTOM */}
 
       <div className="dashboard-bottom">
 
-
-        {/* =================================
-            AKTIVITAS TERBARU
-        ================================= */}
+        {/* AKTIVITAS */}
 
         <div className="dashboard-panel">
 
@@ -535,33 +627,25 @@ function Dashboard() {
                     key={activity.id}
                   >
 
-                    {/* ICON */}
-
                     <div
                       className={`activity-icon ${activity.type}`}
                     >
 
                       {activity.type ===
                       "peminjaman" ? (
-
                         <ArrowUpRight
                           size={17}
                           strokeWidth={2}
                         />
-
                       ) : (
-
                         <Undo2
                           size={17}
                           strokeWidth={2}
                         />
-
                       )}
 
                     </div>
 
-
-                    {/* INFO */}
 
                     <div className="activity-info">
 
@@ -585,37 +669,27 @@ function Dashboard() {
                       </strong>
 
                       <span>
-
                         {activity.type ===
                         "peminjaman"
                           ? "Peminjaman buku"
                           : "Pengembalian buku"}
-
                       </span>
 
                     </div>
 
 
-                    {/* TANGGAL */}
-
                     <div className="activity-date">
-
                       {activity.dateText}
-
                     </div>
 
                   </div>
-
                 )
-
               )
 
             ) : (
 
               <div className="activity-empty">
-
                 Belum ada aktivitas.
-
               </div>
 
             )}
@@ -625,9 +699,7 @@ function Dashboard() {
         </div>
 
 
-        {/* =================================
-            BUKU BELUM DIKEMBALIKAN
-        ================================= */}
+        {/* BELUM DIKEMBALIKAN */}
 
         <div className="dashboard-panel">
 
@@ -645,13 +717,8 @@ function Dashboard() {
 
             </div>
 
-
-            {/* JUMLAH */}
-
             <div className="overdue-count">
-
               {overdueBorrowings.length}
-
             </div>
 
           </div>
@@ -662,30 +729,36 @@ function Dashboard() {
             <div className="overdue-list">
 
               {overdueBorrowings.map(
+<<<<<<< HEAD
                 (borrowing) => ( 
+=======
+                (borrowing, index) => (
+>>>>>>> origin/dashboard-pegawai
 
                   <div
                     className="overdue-item"
-                    key={borrowing.id}
+                    key={
+                      borrowing.id ??
+                      `overdue-${index}`
+                    }
                   >
-
-                    {/* AVATAR */}
 
                     <div className="overdue-avatar">
 
                       {getInitial(
-                        borrowing.namaPeminjam
+                        borrowing.namaPeminjam ||
+                        borrowing.peminjam
                       )}
 
                     </div>
 
 
-                    {/* INFO */}
-
                     <div className="overdue-info">
 
                       <strong>
-                        {borrowing.namaPeminjam}
+                        {borrowing.namaPeminjam ||
+                          borrowing.peminjam ||
+                          "Pengguna"}
                       </strong>
 
                       <span>
@@ -694,8 +767,6 @@ function Dashboard() {
 
                     </div>
 
-
-                    {/* TANGGAL */}
 
                     <div className="overdue-date">
 
@@ -752,10 +823,7 @@ function Dashboard() {
       </div>
 
     </div>
-
   );
-
 }
-
 
 export default Dashboard;

@@ -1,0 +1,643 @@
+/* =====================================================
+   DASHBOARD PEGAWAI
+===================================================== */
+
+.pegawai-dashboard-page {
+  width: 100%;
+  min-height: calc(100vh - 90px);
+  padding: 28px;
+  background: #f1eadc;
+  color: #2f211c;
+}
+
+
+/* =====================================================
+   PAGE HEADER
+===================================================== */
+
+.pegawai-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.pegawai-breadcrumb {
+  margin-bottom: 5px;
+  font-size: 10px;
+  color: #9b8378;
+}
+
+.pegawai-page-header h1 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  color: #2f211c;
+}
+
+.pegawai-page-header p {
+  margin: 5px 0 0;
+  font-size: 12px;
+  color: #907a70;
+}
+
+.pegawai-access {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-top: 4px;
+}
+
+.pegawai-access span {
+  font-size: 10px;
+  color: #9b8378;
+}
+
+.pegawai-access strong {
+  margin-top: 3px;
+  font-size: 13px;
+  color: #3b2119;
+}
+
+
+/* =====================================================
+   WELCOME CARD
+===================================================== */
+
+.pegawai-welcome-card {
+  min-height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 24px 26px;
+  margin-bottom: 18px;
+
+  border-radius: 14px;
+
+  background: #3b2119;
+  color: white;
+
+  box-shadow:
+    0 4px 16px
+    rgba(59, 33, 25, 0.12);
+}
+
+.pegawai-welcome-card h2 {
+  margin: 0 0 7px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.pegawai-welcome-card p {
+  margin: 0;
+  max-width: 600px;
+
+  font-size: 12px;
+  line-height: 1.6;
+
+  color: #eadbd5;
+}
+
+.pegawai-welcome-icon {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.1);
+  color: #f1eadc;
+}
+
+
+/* =====================================================
+   STATISTIC
+===================================================== */
+
+.pegawai-stat-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 15px;
+
+  margin-bottom: 20px;
+}
+
+.pegawai-stat-card {
+  min-height: 145px;
+
+  padding: 18px;
+
+  border-radius: 13px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 2px 12px
+    rgba(59, 33, 25, 0.06);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.pegawai-stat-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 5px 18px
+    rgba(59, 33, 25, 0.09);
+}
+
+.pegawai-stat-icon {
+  width: 35px;
+  height: 35px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 16px;
+
+  border-radius: 9px;
+
+  background: #f5eee4;
+  color: #3b2119;
+}
+
+.pegawai-stat-card > span {
+  display: block;
+
+  margin-bottom: 6px;
+
+  font-size: 11px;
+  color: #6e5b53;
+}
+
+.pegawai-stat-card strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  font-size: 24px;
+  line-height: 1.2;
+
+  color: #2f211c;
+}
+
+.pegawai-stat-card small {
+  font-size: 9px;
+  color: #a18c83;
+}
+
+
+/* =====================================================
+   ACTIVITY CARD
+===================================================== */
+
+.pegawai-activity-card {
+  overflow: hidden;
+
+  border-radius: 14px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 2px 12px
+    rgba(59, 33, 25, 0.06);
+}
+
+
+/* =====================================================
+   ACTIVITY HEADER
+===================================================== */
+
+.pegawai-activity-header {
+  padding: 20px 22px;
+
+  border-bottom:
+    1px solid #eee7dd;
+}
+
+.pegawai-activity-title {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+}
+
+.pegawai-activity-title .pegawai-stat-icon {
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.pegawai-activity-title h2 {
+  margin: 0;
+
+  font-size: 17px;
+  font-weight: 700;
+
+  color: #2f211c;
+}
+
+.pegawai-activity-title p {
+  margin: 4px 0 0;
+
+  font-size: 10px;
+
+  color: #907a70;
+}
+
+
+/* =====================================================
+   ACTIVITY TABLE
+===================================================== */
+
+.pegawai-activity-table {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+
+/* =====================================================
+   TABLE HEADER + ROW
+===================================================== */
+
+.pegawai-activity-table-header,
+.pegawai-activity-row {
+  min-width: 760px;
+
+  display: grid;
+
+  grid-template-columns:
+    55px
+    150px
+    minmax(200px, 1.5fr)
+    minmax(150px, 1fr)
+    120px;
+
+  align-items: center;
+}
+
+.pegawai-activity-table-header {
+  min-height: 42px;
+
+  padding: 0 22px;
+
+  background: #faf7f2;
+
+  border-bottom:
+    1px solid #eee7dd;
+
+  font-size: 9px;
+
+  font-weight: 600;
+
+  color: #8f7a70;
+}
+
+
+/* =====================================================
+   ACTIVITY LIST
+   INI BAGIAN YANG DIBENERIN
+===================================================== */
+
+.pegawai-activity-list {
+  max-height: 335px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  scroll-behavior: smooth;
+
+  scrollbar-width: thin;
+  scrollbar-color: #bda99d #f5eee7;
+}
+
+
+/* =====================================================
+   SCROLLBAR CHROME / EDGE
+===================================================== */
+
+.pegawai-activity-list::-webkit-scrollbar {
+  width: 7px;
+}
+
+.pegawai-activity-list::-webkit-scrollbar-track {
+  background: #f5eee7;
+}
+
+.pegawai-activity-list::-webkit-scrollbar-thumb {
+  background: #bda99d;
+
+  border-radius: 10px;
+}
+
+.pegawai-activity-list::-webkit-scrollbar-thumb:hover {
+  background: #9e887b;
+}
+
+
+/* =====================================================
+   ACTIVITY ROW
+===================================================== */
+
+.pegawai-activity-row {
+  min-height: 67px;
+
+  padding: 0 22px;
+
+  border-bottom:
+    1px solid #f1ebe4;
+
+  transition:
+    background 0.2s ease;
+}
+
+.pegawai-activity-row:last-child {
+  border-bottom: none;
+}
+
+.pegawai-activity-row:hover {
+  background: #fcfaf7;
+}
+
+
+/* =====================================================
+   NUMBER
+===================================================== */
+
+.pegawai-activity-number {
+  font-size: 11px;
+  color: #8f7a70;
+}
+
+
+/* =====================================================
+   ACTIVITY TYPE
+===================================================== */
+
+.pegawai-activity-type {
+  display: flex;
+  align-items: center;
+}
+
+.pegawai-activity-badge {
+  display: inline-flex;
+
+  align-items: center;
+  gap: 6px;
+
+  padding: 6px 9px;
+
+  border-radius: 7px;
+
+  font-size: 9px;
+
+  font-weight: 600;
+}
+
+.pegawai-activity-badge.borrowing {
+  background: #f4e9df;
+  color: #70402d;
+}
+
+.pegawai-activity-badge.returning {
+  background: #eee8df;
+  color: #5f5148;
+}
+
+
+/* =====================================================
+   BOOK
+===================================================== */
+
+.pegawai-activity-book {
+  display: flex;
+
+  flex-direction: column;
+
+  min-width: 0;
+}
+
+.pegawai-activity-book strong {
+  overflow: hidden;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  color: #2f211c;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+}
+
+.pegawai-activity-book small {
+  margin-top: 3px;
+
+  overflow: hidden;
+
+  font-size: 9px;
+
+  color: #a18c83;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+}
+
+
+/* =====================================================
+   BORROWER
+===================================================== */
+
+.pegawai-activity-borrower {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  min-width: 0;
+}
+
+.pegawai-borrower-avatar {
+  width: 27px;
+  height: 27px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #eaded4;
+
+  color: #3b2119;
+
+  font-size: 9px;
+
+  font-weight: 700;
+}
+
+.pegawai-activity-borrower strong {
+  overflow: hidden;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  color: #3b2119;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+}
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+.pegawai-activity-date {
+  font-size: 10px;
+
+  font-weight: 500;
+
+  color: #6e5b53;
+}
+
+
+/* =====================================================
+   EMPTY
+===================================================== */
+
+.pegawai-activity-empty {
+  min-height: 150px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  color: #a18c83;
+
+  font-size: 11px;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.pegawai-activity-footer {
+  display: flex;
+
+  justify-content: center;
+
+  padding: 14px 20px;
+
+  border-top:
+    1px solid #eee7dd;
+}
+
+.pegawai-activity-more {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 8px 13px;
+
+  border:
+    1px solid #dfd4ca;
+
+  border-radius: 7px;
+
+  background: white;
+
+  color: #4d382f;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    0.2s ease;
+}
+
+.pegawai-activity-more:hover {
+  background: #f7f1ea;
+
+  border-color: #cbb9ad;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 1100px) {
+
+  .pegawai-stat-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+@media (max-width: 700px) {
+
+  .pegawai-dashboard-page {
+    padding: 20px 16px;
+  }
+
+  .pegawai-page-header {
+    flex-direction: column;
+  }
+
+  .pegawai-access {
+    align-items: flex-start;
+  }
+
+  .pegawai-welcome-card {
+    padding: 20px;
+  }
+
+  .pegawai-welcome-icon {
+    display: none;
+  }
+
+  .pegawai-stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pegawai-activity-list {
+    max-height: 300px;
+  }
+
+}

@@ -5,7 +5,11 @@ import {
   X,
   Pencil,
   Trash2,
+  ChevronDown,
+  BookMarked,
 } from "lucide-react";
+
+import { useNavigate } from "react-router-dom";
 
 import { useBook } from "../context/BookContext";
 
@@ -33,11 +37,47 @@ const emptyForm = {
 function DataBuku() {
 
   // =================================
+  // NAVIGATE
+  // =================================
+
+  const navigate = useNavigate();
+
+
+  // =================================
+  // USER LOGIN
+  // =================================
+
+  const [user] = useState(() => {
+
+    const savedUser =
+      localStorage.getItem("libraryUser");
+
+    try {
+
+      return savedUser
+        ? JSON.parse(savedUser)
+        : null;
+
+    } catch {
+
+      return null;
+
+    }
+
+  });
+
+
+  const isPegawai =
+    user?.role === "pegawai";
+
+
+  // =================================
   // BOOK CONTEXT
   // =================================
 
   const {
-    books,
+    books = [],
+    genres = [],
     addBook,
     updateBook,
     deleteBook,
@@ -45,10 +85,13 @@ function DataBuku() {
 
 
   // =================================
-  // SEARCH
+  // SEARCH & FILTER
   // =================================
 
   const [search, setSearch] = useState("");
+
+  const [selectedGenre, setSelectedGenre] =
+    useState("");
 
 
   // =================================
@@ -76,7 +119,7 @@ function DataBuku() {
 
 
   // =================================
-  // ID BUKU YANG SEDANG DIEDIT
+  // ID BUKU YANG DIEDIT
   // =================================
 
   const [editingBookId, setEditingBookId] =
@@ -95,13 +138,24 @@ function DataBuku() {
   // FILTER BUKU
   // =================================
 
-  const filteredBooks = books.filter((book) =>
+  const filteredBooks = books.filter((book) => {
 
-    `${book.title} ${book.author} ${book.genre}`
-      .toLowerCase()
-      .includes(search.toLowerCase())
+    const keyword =
+      `${book.title || ""} ${book.author || ""} ${book.genre || ""}`
+        .toLowerCase();
 
-  );
+    const cocokSearch =
+      keyword.includes(
+        search.toLowerCase()
+      );
+
+    const cocokGenre =
+      selectedGenre === "" ||
+      book.genre === selectedGenre;
+
+    return cocokSearch && cocokGenre;
+
+  });
 
 
   // =================================
@@ -115,13 +169,9 @@ function DataBuku() {
       value,
     } = e.target;
 
-
     setFormData((current) => ({
-
       ...current,
-
       [name]: value,
-
     }));
 
   };
@@ -137,14 +187,21 @@ function DataBuku() {
       ...emptyForm,
     });
 
+    setEditingBookId(null);
+
   };
 
 
   // =================================
   // BUKA TAMBAH
+  // ADMIN ONLY
   // =================================
 
   const handleOpenAdd = () => {
+
+    if (isPegawai) {
+      return;
+    }
 
     resetForm();
 
@@ -168,25 +225,23 @@ function DataBuku() {
 
   // =================================
   // TAMBAH BUKU
+  // ADMIN ONLY
   // =================================
 
   const handleAddBook = (e) => {
 
     e.preventDefault();
 
+    if (isPegawai) {
+      return;
+    }
 
     if (
-
       !formData.title.trim() ||
-
       !formData.author.trim() ||
-
       !formData.publisher.trim() ||
-
       !formData.genre.trim() ||
-
       formData.stock === ""
-
     ) {
 
       alert(
@@ -194,7 +249,6 @@ function DataBuku() {
       );
 
       return;
-
     }
 
 
@@ -216,7 +270,7 @@ function DataBuku() {
         Number(formData.stock),
 
       cover:
-        formData.cover.trim() || "",
+        formData.cover.trim(),
 
     });
 
@@ -229,7 +283,7 @@ function DataBuku() {
 
 
   // =================================
-  // BUKA DETAIL
+  // DETAIL BUKU
   // =================================
 
   const handleDetail = (book) => {
@@ -240,10 +294,45 @@ function DataBuku() {
 
 
   // =================================
-  // BUKA EDIT
+  // TAMBAH PEMINJAM
+  // PEGAWAI ONLY
+  // =================================
+
+  const handleTambahPeminjam = () => {
+
+    if (!selectedBook) {
+      return;
+    }
+
+
+    // Simpan buku yang dipilih
+    // supaya halaman peminjaman
+    // bisa mengambilnya kalau diperlukan
+
+    localStorage.setItem(
+      "selectedBookForBorrowing",
+      JSON.stringify(selectedBook)
+    );
+
+
+    setSelectedBook(null);
+
+
+    navigate("/pegawai/peminjaman");
+
+  };
+
+
+  // =================================
+  // EDIT BUKU
+  // ADMIN ONLY
   // =================================
 
   const handleEdit = () => {
+
+    if (isPegawai) {
+      return;
+    }
 
     if (!selectedBook) {
       return;
@@ -295,20 +384,23 @@ function DataBuku() {
 
     resetForm();
 
-    setEditingBookId(null);
-
     setShowEditModal(false);
 
   };
 
 
   // =================================
-  // SIMPAN PERUBAHAN
+  // SIMPAN EDIT
+  // ADMIN ONLY
   // =================================
 
   const handleSaveEdit = (e) => {
 
     e.preventDefault();
+
+    if (isPegawai) {
+      return;
+    }
 
 
     if (editingBookId === null) {
@@ -318,22 +410,15 @@ function DataBuku() {
       );
 
       return;
-
     }
 
 
     if (
-
       !formData.title.trim() ||
-
       !formData.author.trim() ||
-
       !formData.publisher.trim() ||
-
       !formData.genre.trim() ||
-
       formData.stock === ""
-
     ) {
 
       alert(
@@ -341,7 +426,6 @@ function DataBuku() {
       );
 
       return;
-
     }
 
 
@@ -376,8 +460,6 @@ function DataBuku() {
 
     resetForm();
 
-    setEditingBookId(null);
-
     setShowEditModal(false);
 
   };
@@ -385,9 +467,15 @@ function DataBuku() {
 
   // =================================
   // HAPUS BUKU
+  // ADMIN ONLY
   // =================================
 
   const handleDelete = (id) => {
+
+    if (isPegawai) {
+      return;
+    }
+
 
     const yakin =
       window.confirm(
@@ -413,7 +501,17 @@ function DataBuku() {
 
   return (
 
-    <div className="data-buku-page">
+    <div
+      className="data-buku-page"
+      style={{
+        width: "100%",
+        height: "calc(100vh - 145px)",
+        overflowY: "auto",
+        overflowX: "hidden",
+        paddingRight: "10px",
+        boxSizing: "border-box",
+      }}
+    >
 
 
       {/* =================================
@@ -433,13 +531,18 @@ function DataBuku() {
           </h1>
 
           <p>
-            Kelola data buku perpustakaan
+            {isPegawai
+              ? "Lihat data buku dan lakukan peminjaman."
+              : "Kelola data buku perpustakaan"
+            }
           </p>
 
         </div>
 
 
-        {/* SEARCH + TAMBAH */}
+        {/* =================================
+            SEARCH + FILTER + TAMBAH
+        ================================= */}
 
         <div className="page-actions">
 
@@ -449,7 +552,7 @@ function DataBuku() {
           <div className="search-box">
 
             <Search
-              size={15}
+              size={16}
               className="search-icon"
             />
 
@@ -465,20 +568,63 @@ function DataBuku() {
           </div>
 
 
-          {/* TAMBAH */}
+          {/* FILTER GENRE */}
 
-          <button
-            className="btn-tambah"
-            onClick={handleOpenAdd}
-          >
-            + Tambah Buku
-          </button>
+          <div className="genre-filter">
 
+            <select
+              value={selectedGenre}
+              onChange={(e) =>
+                setSelectedGenre(
+                  e.target.value
+                )
+              }
+            >
+
+              <option value="">
+                Semua Genre
+              </option>
+
+              {genres.map((genre) => (
+
+                <option
+                  key={genre}
+                  value={genre}
+                >
+                  {genre}
+                </option>
+
+              ))}
+
+            </select>
+
+
+            <ChevronDown
+              size={15}
+              className="genre-filter-icon"
+            />
+
+          </div>
+
+
+          {/* TAMBAH BUKU
+              ADMIN ONLY */}
+
+          {!isPegawai && (
+
+            <button
+              type="button"
+              className="btn-tambah"
+              onClick={handleOpenAdd}
+            >
+              + Tambah Buku
+            </button>
+
+          )}
 
         </div>
 
       </div>
-
 
 
       {/* =================================
@@ -507,12 +653,9 @@ function DataBuku() {
                   className="book-cover"
 
                   onError={(e) => {
-
                     e.currentTarget.style.display =
                       "none";
-
                   }}
-
                 />
 
               ) : null}
@@ -558,9 +701,8 @@ function DataBuku() {
               </div>
 
 
-              {/* DETAIL */}
-
               <button
+                type="button"
                 className="btn-lihat"
                 onClick={() =>
                   handleDetail(book)
@@ -569,9 +711,7 @@ function DataBuku() {
                 Lihat Detail
               </button>
 
-
             </div>
-
 
           </div>
 
@@ -591,7 +731,6 @@ function DataBuku() {
       </div>
 
 
-
       {/* =================================
           MODAL DETAIL
       ================================= */}
@@ -600,20 +739,16 @@ function DataBuku() {
 
         <div
           className="modal-overlay"
-
           onClick={() =>
             setSelectedBook(null)
           }
-
         >
 
           <div
             className="modal-box detail-modal"
-
             onClick={(e) =>
               e.stopPropagation()
             }
-
           >
 
 
@@ -635,28 +770,22 @@ function DataBuku() {
 
 
               <button
+                type="button"
                 className="modal-close"
-
                 onClick={() =>
                   setSelectedBook(null)
                 }
-
               >
-
                 <X size={18} />
-
               </button>
 
             </div>
-
 
 
             {/* DETAIL */}
 
             <div className="detail-content">
 
-
-              {/* COVER */}
 
               <div className="detail-cover">
 
@@ -665,23 +794,12 @@ function DataBuku() {
                   <img
                     src={selectedBook.cover}
                     alt={selectedBook.title}
-
-                    onError={(e) => {
-
-                      e.currentTarget.style.display =
-                        "none";
-
-                    }}
-
                   />
 
                 ) : null}
 
               </div>
 
-
-
-              {/* INFO */}
 
               <div className="detail-info">
 
@@ -742,62 +860,108 @@ function DataBuku() {
 
                 </div>
 
-
               </div>
 
             </div>
 
 
-
-            {/* FOOTER */}
+            {/* =================================
+                FOOTER
+            ================================= */}
 
             <div className="modal-footer">
 
 
-              <button
-                className="btn-modal-secondary"
+              {/* TUTUP */}
 
+              <button
+                type="button"
+                className="btn-modal-secondary"
                 onClick={() =>
                   setSelectedBook(null)
                 }
-
               >
                 Tutup
               </button>
 
 
-              <button
-                className="btn-modal-edit"
-                onClick={handleEdit}
-              >
+              {/* =================================
+                  PEGAWAI
+                  TAMBAH PEMINJAM
+              ================================= */}
 
-                <Pencil size={15} />
+              {isPegawai ? (
 
-                Edit
+                <button
+                  type="button"
+                  className="btn-modal-primary"
+                  onClick={
+                    handleTambahPeminjam
+                  }
+                  disabled={
+                    Number(selectedBook.stock) <= 0
+                  }
+                  title={
+                    Number(selectedBook.stock) <= 0
+                      ? "Stok buku habis"
+                      : "Tambah peminjam"
+                  }
+                >
 
-              </button>
+                  <BookMarked size={15} />
+
+                  {Number(selectedBook.stock) <= 0
+                    ? "Stok Habis"
+                    : "Tambah Peminjam"
+                  }
+
+                </button>
+
+              ) : (
+
+                <>
+                  {/* =================================
+                      ADMIN - EDIT
+                  ================================= */}
+
+                  <button
+                    type="button"
+                    className="btn-modal-edit"
+                    onClick={handleEdit}
+                  >
+
+                    <Pencil size={15} />
+
+                    Edit
+
+                  </button>
 
 
-              <button
-                className="btn-modal-danger"
+                  {/* =================================
+                      ADMIN - HAPUS
+                  ================================= */}
 
-                onClick={() =>
-                  handleDelete(
-                    selectedBook.id
-                  )
-                }
+                  <button
+                    type="button"
+                    className="btn-modal-danger"
+                    onClick={() =>
+                      handleDelete(
+                        selectedBook.id
+                      )
+                    }
+                  >
 
-              >
+                    <Trash2 size={15} />
 
-                <Trash2 size={15} />
+                    Hapus
 
-                Hapus
+                  </button>
 
-              </button>
+                </>
 
+              )}
 
             </div>
-
 
           </div>
 
@@ -806,22 +970,20 @@ function DataBuku() {
       )}
 
 
-
       {/* =================================
           MODAL TAMBAH
+          ADMIN ONLY
       ================================= */}
 
-      {showAddModal && (
+      {showAddModal && !isPegawai && (
 
         <div className="modal-overlay">
 
           <div
             className="modal-box"
-
             onClick={(e) =>
               e.stopPropagation()
             }
-
           >
 
             <div className="modal-header">
@@ -842,24 +1004,18 @@ function DataBuku() {
               <button
                 type="button"
                 className="modal-close"
-
                 onClick={handleCancelAdd}
-
               >
-
                 <X size={18} />
-
               </button>
 
             </div>
-
 
 
             <form
               onSubmit={handleAddBook}
               className="book-form"
             >
-
 
               <div className="form-group">
 
@@ -876,7 +1032,6 @@ function DataBuku() {
                 />
 
               </div>
-
 
 
               <div className="form-group">
@@ -896,7 +1051,6 @@ function DataBuku() {
               </div>
 
 
-
               <div className="form-group">
 
                 <label>
@@ -912,7 +1066,6 @@ function DataBuku() {
                 />
 
               </div>
-
 
 
               <div className="form-row">
@@ -954,7 +1107,6 @@ function DataBuku() {
               </div>
 
 
-
               <div className="form-group">
 
                 <label>
@@ -974,7 +1126,6 @@ function DataBuku() {
                 </small>
 
               </div>
-
 
 
               <div className="modal-footer">
@@ -987,7 +1138,6 @@ function DataBuku() {
                   Batal
                 </button>
 
-
                 <button
                   type="submit"
                   className="btn-modal-primary"
@@ -996,7 +1146,6 @@ function DataBuku() {
                 </button>
 
               </div>
-
 
             </form>
 
@@ -1007,22 +1156,20 @@ function DataBuku() {
       )}
 
 
-
       {/* =================================
           MODAL EDIT
+          ADMIN ONLY
       ================================= */}
 
-      {showEditModal && (
+      {showEditModal && !isPegawai && (
 
         <div className="modal-overlay">
 
           <div
             className="modal-box"
-
             onClick={(e) =>
               e.stopPropagation()
             }
-
           >
 
             <div className="modal-header">
@@ -1034,7 +1181,7 @@ function DataBuku() {
                 </h2>
 
                 <p>
-                  Ubah informasi buku
+                  Perbarui data buku
                 </p>
 
               </div>
@@ -1043,24 +1190,18 @@ function DataBuku() {
               <button
                 type="button"
                 className="modal-close"
-
                 onClick={handleCancelEdit}
-
               >
-
                 <X size={18} />
-
               </button>
 
             </div>
-
 
 
             <form
               onSubmit={handleSaveEdit}
               className="book-form"
             >
-
 
               <div className="form-group">
 
@@ -1077,7 +1218,6 @@ function DataBuku() {
                 />
 
               </div>
-
 
 
               <div className="form-group">
@@ -1097,7 +1237,6 @@ function DataBuku() {
               </div>
 
 
-
               <div className="form-group">
 
                 <label>
@@ -1113,7 +1252,6 @@ function DataBuku() {
                 />
 
               </div>
-
 
 
               <div className="form-row">
@@ -1155,7 +1293,6 @@ function DataBuku() {
               </div>
 
 
-
               <div className="form-group">
 
                 <label>
@@ -1170,12 +1307,7 @@ function DataBuku() {
                   onChange={handleChange}
                 />
 
-                <small>
-                  Masukkan URL gambar langsung, bukan link Pinterest.
-                </small>
-
               </div>
-
 
 
               <div className="modal-footer">
@@ -1198,7 +1330,6 @@ function DataBuku() {
 
               </div>
 
-
             </form>
 
           </div>
@@ -1206,7 +1337,6 @@ function DataBuku() {
         </div>
 
       )}
-
 
     </div>
 
